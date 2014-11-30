@@ -1,17 +1,31 @@
 package com.example.rehabilitacja;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 public class LogActivity extends ActionBarActivity {
+	
+	EditText id;
+	Button zaloguj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+        zaloguj=(Button) findViewById(R.id.buttonZaloguj);
+        zaloguj.setOnClickListener(new View.OnClickListener(){
+        	@Override
+            public void onClick(View v) {
+        		id=(EditText) findViewById(R.id.editId);
+        		String id1=id.toString();
+            }
+        });
     }
 
 
