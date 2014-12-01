@@ -7,5 +7,9 @@
     <string name="id">ID:</string>
     <string name="password">Haslo:</string>
     <string name="logbutton">Zaloguj</string>
+    <string name="zamknijButton">Zamknij</string>
+    <string name="title_activity_login_dialog">LoginDialog</string>
+    <string name="pleaseWait">Prosze czekaj. Trwa logowanie...</string>
+    <string name="pleaseWaitFalse">Blad autoryzacji</string>
 
 </resources>
