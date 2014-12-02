@@ -12,11 +12,15 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -28,19 +32,20 @@ public class LogActivity extends ActionBarActivity {
 	final Context context = this;
 	
 	private class nowyWatek extends AsyncTask<String,Void,String>{
+
+		final Dialog dialog = new Dialog(context);
+		Button zamknij;
 		
 		@Override
 		protected void onPreExecute(){
-			/* custom dialog
-	     	final Dialog dialog = new Dialog(context);
+	     	
 	    	dialog.setContentView(R.layout.activity_login_dialog);
-	    	dialog.setTitle("Logowanie");
-	    	Button zamknij = (Button) findViewById(R.id.zamknijButton);
+	    	//dialog.setTitle("Logowanie");
+	    	zamknij = (Button) dialog.findViewById(R.id.zamknijButton);
 	    	zamknij.setVisibility(View.INVISIBLE);
-	     	// set the custom dialog components - text, image and button
 	    	
 	    	dialog.show();	
-	    	*/
+	    	
 		}
 		
 		@Override
@@ -49,7 +54,7 @@ public class LogActivity extends ActionBarActivity {
 				
 				String username = (String)arg0[0];
 	            String password = (String)arg0[1];
-	            String link="http://192.168.0.11/test/index.php";
+	            String link="http://192.168.0.16/test/index.php";
 	            String data  = URLEncoder.encode("id", "UTF-8") 
 	            + "=" + URLEncoder.encode(username, "UTF-8");
 	            data += "&" + URLEncoder.encode("pass", "UTF-8") 
@@ -77,8 +82,34 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(String result){
-			textView1=(TextView) findViewById(R.id.textView1);
-			textView1.setText(result);
+			if("dupa".equals(result)==false){
+				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
+				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
+				pasek.setVisibility(View.INVISIBLE);
+				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+				        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+				p.addRule(RelativeLayout.BELOW, R.id.image);
+				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
+
+				tekst.setLayoutParams(p);
+				tekst.setText("Blad logowania");
+				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+				tekst.setTextSize(30);
+				
+				zamknij.setVisibility(View.VISIBLE);
+				zamknij.setOnClickListener(new View.OnClickListener(){
+		        	@Override
+		            public void onClick(View v) {
+		        		dialog.dismiss();
+		            }
+		        });
+			}
+			else{ //Logowanie zakonczone sukcesem - przejscie do kolejnej intencji- TO DO
+				dialog.dismiss();
+				textView1=(TextView) findViewById(R.id.textView1);
+				textView1.setText(result);
+			}
 		}
 	}
 	
