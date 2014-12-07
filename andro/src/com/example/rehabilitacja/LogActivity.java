@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -82,10 +83,7 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(String result){
-<<<<<<< HEAD
 			result=android.text.Html.fromHtml(result).toString();
-=======
->>>>>>> bdeecb90d53f8f91cd5a90f70babc084dcb61410
 			if("dupa".equals(result)==false){
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
@@ -111,10 +109,14 @@ public class LogActivity extends ActionBarActivity {
 			}
 			else{ //Logowanie zakonczone sukcesem - przejscie do kolejnej intencji- TO DO
 				dialog.dismiss();
-				textView1=(TextView) findViewById(R.id.textView1);
-				textView1.setText(result);
+				dalej();
 			}
 		}
+	}
+	
+	private void dalej() {
+		Intent i = new Intent(this,MenuActivity.class);
+		startActivity(i);
 	}
 	
     @Override
