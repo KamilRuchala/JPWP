@@ -82,7 +82,10 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(String result){
+<<<<<<< HEAD
 			result=android.text.Html.fromHtml(result).toString();
+=======
+>>>>>>> bdeecb90d53f8f91cd5a90f70babc084dcb61410
 			if("dupa".equals(result)==false){
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
