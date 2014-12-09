@@ -56,11 +56,17 @@ public class LogActivity extends ActionBarActivity {
 				
 				String username = (String)arg0[0];
 	            String password = (String)arg0[1];
-	            String link="http://192.168.0.16/test/index.php";
+	            String ident= "0";
+	            String tag="login";
+	            String link="http://192.168.0.16/test/index2.php";
 	            String data  = URLEncoder.encode("id", "UTF-8") 
 	            + "=" + URLEncoder.encode(username, "UTF-8");
 	            data += "&" + URLEncoder.encode("pass", "UTF-8") 
-	            + "=" + URLEncoder.encode(password, "UTF-8");
+	            + "=" + URLEncoder.encode(password, "UTF-8") ;
+	            data += "&" + URLEncoder.encode("tag", "UTF-8") 
+	    	    + "=" + URLEncoder.encode(tag, "UTF-8") ;
+	            data += "&" + URLEncoder.encode("ident", "UTF-8") 
+	    	    + "=" + URLEncoder.encode(ident, "UTF-8") ;
 	            URL url = new URL(link);
 	            URLConnection conn = url.openConnection(); 
 	            conn.setDoOutput(true); 
@@ -84,36 +90,11 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(String result){
-			//result=android.text.Html.fromHtml(result).toString();
+			// result=android.text.Html.fromHtml(result).toString();
 			Log.d("debuggowanie programu", result);
 			textView1.setText(result);
-			if("dupa".equals(result)==false){
-				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
-				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
-				pasek.setVisibility(View.INVISIBLE);
-				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				        ViewGroup.LayoutParams.WRAP_CONTENT);
-
-				p.addRule(RelativeLayout.BELOW, R.id.image);
-				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
-
-				tekst.setLayoutParams(p);
-				tekst.setText(result);
-				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-				tekst.setTextSize(30);
-				
-				zamknij.setVisibility(View.VISIBLE);
-				zamknij.setOnClickListener(new View.OnClickListener(){
-		        	@Override
-		            public void onClick(View v) {
-		        		dialog.dismiss();
-		            }
-		        });
-			}
-			else{ //Logowanie zakonczone sukcesem - przejscie do kolejnej intencji- TO DO
-				dialog.dismiss();
-				dalej();
-			}
+			dialog.dismiss();
+			dalej();
 		}
 	}
 	
