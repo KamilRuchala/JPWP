@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,7 +84,9 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(String result){
-			result=android.text.Html.fromHtml(result).toString();
+			//result=android.text.Html.fromHtml(result).toString();
+			Log.d("debuggowanie programu", result);
+			textView1.setText(result);
 			if("dupa".equals(result)==false){
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
@@ -95,7 +98,7 @@ public class LogActivity extends ActionBarActivity {
 				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
 
 				tekst.setLayoutParams(p);
-				tekst.setText("Blad logowania");
+				tekst.setText(result);
 				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 				tekst.setTextSize(30);
 				
@@ -124,6 +127,7 @@ public class LogActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
         
+        textView1=(TextView) findViewById(R.id.textView1);
         id=(EditText) findViewById(R.id.editId);
 		pass=(EditText) findViewById(R.id.editPass);
         zaloguj=(Button) findViewById(R.id.buttonZaloguj);
