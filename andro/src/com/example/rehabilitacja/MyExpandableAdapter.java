@@ -77,8 +77,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
    }
 
    @Override
-   public View getGroupView(int groupPosition, boolean isExpanded,
-           View convertView, ViewGroup parent) {
+   public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
        String headerTitle = (String) getGroup(groupPosition);
        if (convertView == null) {
            LayoutInflater infalInflater = (LayoutInflater) this._context

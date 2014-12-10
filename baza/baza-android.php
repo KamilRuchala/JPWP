@@ -25,7 +25,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     $response = array("tag" => $tag, "success" => 0, "error" => 0);
  
     // check for tag type
-    if ($tag == 'login') { //login wporzo
+    if ($tag == "login") { //login wporzo
         // Request type is check Login
         $id = $_POST['id'];
         $password = $_POST['pass'];
@@ -49,7 +49,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 				$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];//k
 			} //k
             echo json_encode($response);
-			header("Refresh:2; URL=http://localhost/test/next.html");
+			//header("Refresh:2; URL=http://localhost/test/next.html");
 			//echo $dupa;
         } else {
             // user not found
@@ -151,6 +151,46 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 				echo json_encode($response);
 			}
 		}
+	}
+	
+	else if ($tag == 'jutrzejszy_plan'){
+		$uid=$_POST['uid'];
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getTodayPlan($uid);
+			if ($dane != false && $dane['namba'] == 1) {
+				$response["success"] = 1;
+                $response["nazwa"] = $dane["nazwa"];
+                $response["serie"] = $dane["serie"];
+				$response["powtorzenia"] = $dane["powtorzenia"];
+				$response["link"] = $dane["link"];
+                echo json_encode($response);
+			}
+			else if ($dane != false && $dane['namba'] > 1) {
+				$tmp=0;
+				$stringjson="";
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response["success"] = 1;
+					$response["nazwa"] = $dane2["nazwa"];
+					$response["serie"] = $dane2["serie"];
+					$response["powtorzenia"] = $dane2["powtorzenia"];
+					$response["link"] = $dane2["link"];
+					$jason=(string)json_encode($response);
+					$stringjson = $stringjson . $jason . ".";
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
+	else if ($tag == 'tygodniowy_plan'){
+
 	}
 	
 	else if ($tag == 'wyloguj'){
