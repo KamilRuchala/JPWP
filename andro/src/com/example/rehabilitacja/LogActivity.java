@@ -27,7 +27,6 @@ import com.example.rehabilitacja.klasy.UserFunctions;
 public class LogActivity extends ActionBarActivity {
 	
 	EditText id, pass;
-	TextView textView1;
 	Button zaloguj;
 	final Context context = this;
 	
@@ -61,11 +60,9 @@ public class LogActivity extends ActionBarActivity {
 			
 			
 			JSONObject json = UserFunctions.loginUser(arg0[0], arg0[1]); // tu jest problem
-			
-			return "OK";
-			/*
+			Log.e("dupa",json.toString());
 			try {
-                if (json.getString(KEY_SUCCESS) == "1") { // tu moze byc problem bo key_success nie jest stringiem
+                if ("1".equals(json.getString(KEY_SUCCESS))) { // tu moze byc problem bo key_success nie jest stringiem
                     uid=json.getString(KEY_UID);
                     return "OK";
                 }
@@ -77,14 +74,13 @@ public class LogActivity extends ActionBarActivity {
             } catch (JSONException e) {
                 return "BLAD";
             }
-            */
+            
 		}
 		
 		@Override
 		protected void onPostExecute(String result){
 			// result=android.text.Html.fromHtml(result).toString();
 			Log.d("debuggowanie programu", result);
-			textView1.setText(result);
 			
 			if("OK".equals(result)){
 				dialog.dismiss();
@@ -127,7 +123,6 @@ public class LogActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
         
-        textView1=(TextView) findViewById(R.id.textView1);
         id=(EditText) findViewById(R.id.editId);
 		pass=(EditText) findViewById(R.id.editPass);
         zaloguj=(Button) findViewById(R.id.buttonZaloguj);

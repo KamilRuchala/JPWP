@@ -1,21 +1,21 @@
+
+
+
+///////// UWAGA! PLIK PRAKTYCZNIE DO WYRZUCENIA! ///////////////////////
+
+
 package com.example.rehabilitacja.klasy;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
- 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
 import org.json.JSONObject;
- 
+
 import android.util.Log;
  
 public class JSONParser { //tak na prawde nie parsuje jsona ale zwraca odpowiedz serwera, ciezko zrobic zeby w tym miejscu byl elastyczny
@@ -29,46 +29,37 @@ public class JSONParser { //tak na prawde nie parsuje jsona ale zwraca odpowiedz
  
     }
  
-    public String getJSONFromUrl(String url, List<NameValuePair> params) {
+    public String getJSONFromUrl(String url1, String tag, String id, String pass, String ident) {
     	Log.d("doinback","Making HTTP request");
         // Making HTTP request
-        try {
-        	
-            // defaultHttpClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
- 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
-            
- 
-        } catch (UnsupportedEncodingException e) {
-        	Log.d("wyjatek1","dupastotysiecy");
-        } catch (ClientProtocolException e) {
-        	Log.d("wyjatek2","dupastotysiecy");
-        } catch (IOException e) {
-        	Log.d("wyjatek3","dupastotysiecy");
-        }
- 
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
+    	try{
+            String username = id;
+            String password = pass;
+            String data = URLEncoder.encode("tag", "UTF-8")+ "=" + URLEncoder.encode(tag, "UTF-8");
+            data  += URLEncoder.encode("id", "UTF-8")+ "=" + URLEncoder.encode(username, "UTF-8");
+            data += "&" + URLEncoder.encode("pass", "UTF-8")+ "=" + URLEncoder.encode(password, "UTF-8");
+            data += "&" + URLEncoder.encode("ident", "UTF-8")+ "=" + URLEncoder.encode(ident, "UTF-8");
+            URL url = new URL(url1);
+            URLConnection conn = url.openConnection(); 
+            conn.setDoOutput(true); 
+            OutputStreamWriter wr = new OutputStreamWriter
+            (conn.getOutputStream()); 
+            wr.write( data ); 
+            wr.flush(); 
+            BufferedReader reader = new BufferedReader
+            (new InputStreamReader(conn.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            // Read Server Response
+            while((line = reader.readLine()) != null)
+            {
+               sb.append(line);
+               break;
             }
-            is.close();
-            json = sb.toString();
-            Log.e("JSON", json);
-        } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
-        }
-
-        // return server response
-        return json;
+            return sb.toString();
+         }catch(Exception e){
+            return new String("Exception: " + e.getMessage());
+         }
  
     }
 }

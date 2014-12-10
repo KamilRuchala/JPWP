@@ -60,14 +60,4 @@
         android:text="@string/password"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editPass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:ems="10"
-        android:text="MultiAutoCompleteTextView" />
-
 </RelativeLayout>
