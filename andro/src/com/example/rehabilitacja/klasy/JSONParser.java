@@ -30,9 +30,10 @@ public class JSONParser { //tak na prawde nie parsuje jsona ale zwraca odpowiedz
     }
  
     public String getJSONFromUrl(String url, List<NameValuePair> params) {
- 
+    	Log.d("doinback","Making HTTP request");
         // Making HTTP request
         try {
+        	
             // defaultHttpClient
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
@@ -41,13 +42,14 @@ public class JSONParser { //tak na prawde nie parsuje jsona ale zwraca odpowiedz
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
+            
  
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        	Log.d("wyjatek1","dupastotysiecy");
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+        	Log.d("wyjatek2","dupastotysiecy");
         } catch (IOException e) {
-            e.printStackTrace();
+        	Log.d("wyjatek3","dupastotysiecy");
         }
  
         try {

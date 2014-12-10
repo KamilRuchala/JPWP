@@ -1,11 +1,7 @@
 package com.example.rehabilitacja;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.rehabilitacja.klasy.UserFunctions;
+
 
 public class LogActivity extends ActionBarActivity {
 	
@@ -32,6 +30,14 @@ public class LogActivity extends ActionBarActivity {
 	TextView textView1;
 	Button zaloguj;
 	final Context context = this;
+	
+	private static String KEY_SUCCESS = "success";
+    private static String KEY_ERROR = "error";
+    private static String KEY_ERROR_MSG = "error_msg";
+    private static String KEY_UID = "uid";
+    private static String KEY_ID = "id";
+    
+    public static String uid = null; // uid nalezy zapisac w sesji, TO DO na pozniej
 	
 	private class nowyWatek extends AsyncTask<String,Void,String>{
 
@@ -52,40 +58,26 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected String doInBackground(String... arg0){
-			try{
-				
-				String username = (String)arg0[0];
-	            String password = (String)arg0[1];
-	            String ident= "0";
-	            String tag="login";
-	            String link="http://192.168.0.16/test/index2.php";
-	            String data  = URLEncoder.encode("id", "UTF-8") 
-	            + "=" + URLEncoder.encode(username, "UTF-8");
-	            data += "&" + URLEncoder.encode("pass", "UTF-8") 
-	            + "=" + URLEncoder.encode(password, "UTF-8") ;
-	            data += "&" + URLEncoder.encode("tag", "UTF-8") 
-	    	    + "=" + URLEncoder.encode(tag, "UTF-8") ;
-	            data += "&" + URLEncoder.encode("ident", "UTF-8") 
-	    	    + "=" + URLEncoder.encode(ident, "UTF-8") ;
-	            URL url = new URL(link);
-	            URLConnection conn = url.openConnection(); 
-	            conn.setDoOutput(true); 
-	            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-	            wr.write( data ); 
-	            wr.flush(); 
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	            StringBuilder sb = new StringBuilder();
-	            String line = null;
-	            // Read Server Response
-	            while((line = reader.readLine()) != null)
-	            {
-	               sb.append(line);
-	               break;
-	            }
-	            return sb.toString();
-			}catch(Exception e){
-				return new String("Exception: " + e.getMessage());
-	      }
+			
+			
+			JSONObject json = UserFunctions.loginUser(arg0[0], arg0[1]); // tu jest problem
+			
+			return "OK";
+			/*
+			try {
+                if (json.getString(KEY_SUCCESS) == "1") { // tu moze byc problem bo key_success nie jest stringiem
+                    uid=json.getString(KEY_UID);
+                    return "OK";
+                }
+                else{
+                        // Error in login
+                    return "NO";
+                }
+                
+            } catch (JSONException e) {
+                return "BLAD";
+            }
+            */
 		}
 		
 		@Override
@@ -93,8 +85,35 @@ public class LogActivity extends ActionBarActivity {
 			// result=android.text.Html.fromHtml(result).toString();
 			Log.d("debuggowanie programu", result);
 			textView1.setText(result);
-			dialog.dismiss();
-			dalej();
+			
+			if("OK".equals(result)){
+				dialog.dismiss();
+				dalej();  // logowanie udane => przejscie do kolejnej aktywnosci
+				finish(); // zakoncz aktywnosc logowania
+			}
+			else{
+				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
+				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
+				pasek.setVisibility(View.INVISIBLE);
+				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+				
+				p.addRule(RelativeLayout.BELOW, R.id.image);
+				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
+				
+				tekst.setLayoutParams(p);
+				tekst.setText("Blad logowania");
+				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+				tekst.setTextSize(30);
+								
+				zamknij.setVisibility(View.VISIBLE);
+				zamknij.setOnClickListener(new View.OnClickListener(){
+		     	@Override
+	            public void onClick(View v) {
+		     		dialog.dismiss();
+		        }
+				});
+			}
 		}
 	}
 	

@@ -13,14 +13,14 @@ import android.util.Log;
  
 public class UserFunctions {
      
-    private JSONParser jsonParser;
+    private static JSONParser jsonParser;
      
     // Testing in localhost using wamp or xampp 
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
     private static String URL = "http://192.168.0.16/test/index2.php";
     
     private static String login_tag = "login";
-    private static String register_tag = "register";
+    private static String dzienny_plan = "dzienny_plan";
      
     // constructor
     public UserFunctions(){
@@ -29,10 +29,8 @@ public class UserFunctions {
      
     /**
      * function make Login Request
-     * @param email
-     * @param password
      * */
-    public JSONObject loginUser(String id, String pass){
+    public static JSONObject loginUser(String id, String pass){
         // Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         String ident="0";
@@ -40,7 +38,9 @@ public class UserFunctions {
         params.add(new BasicNameValuePair("id", id));
         params.add(new BasicNameValuePair("pass", pass));
         params.add(new BasicNameValuePair("ident", ident));
-        String json = jsonParser.getJSONFromUrl(URL, params);
+        Log.d("doinback",params.toString()); // tu jeszcze jest ok, chyba cos parser leci  w kule
+        String json = jsonParser.getJSONFromUrl(URL, params); // to juz nie wchodzi
+        
         JSONObject jObj = null;
         
      // try parse the string to a JSON object
@@ -54,12 +54,7 @@ public class UserFunctions {
         // Log.e("JSON", json.toString());
     }
      
-    /**
-     * function make Login Request
-     * @param name
-     * @param email
-     * @param password
-     * */
+
      
     /**
      * Function get Login status
@@ -78,5 +73,20 @@ public class UserFunctions {
         
         return true;
     }
-     
+    
+    /**
+     * my functions
+     * */
+    
+    public static JSONObject getTodayPlan(String uid){
+	 // Building Parameters
+	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+	    params.add(new BasicNameValuePair("tag", dzienny_plan));
+	    params.add(new BasicNameValuePair("uid", uid));
+	    String json = jsonParser.getJSONFromUrl(URL, params);
+        JSONObject jObj = null;
+        // pasuje tego stringa zesplitowac wzgledem kropek, pozniej petelka i liczenie elementow; pasuje zwrocic tablice bo prawie zawsze bedzie >1 jsonow
+        return jObj;
+    }
+    
 }
