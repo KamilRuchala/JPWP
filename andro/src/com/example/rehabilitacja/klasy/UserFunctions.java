@@ -35,6 +35,7 @@ public class UserFunctions {
     
     private static String login_tag = "login";
     private static String dzienny_plan = "dzienny_plan";
+    private static String dane_ogolne = "dane_ogolne";
      
     // constructor
     public UserFunctions(){
@@ -127,6 +128,26 @@ public class UserFunctions {
     /**
      * my functions
      * */
+    
+    public static JSONObject userData(String uid){
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	    params.add(new BasicNameValuePair("tag", dane_ogolne));
+	    params.add(new BasicNameValuePair("uid", uid));
+	    String json =  getServerResponse(params);
+        // return json
+        // Log.e("JSON", json.toString());
+        
+        // try parse the string to a JSON object
+        try {
+            jObj = new JSONObject(json);            
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+ 
+        // return JSON String
+        return jObj;
+    }
+    
     
     public static JSONObject getTodayPlan(String uid){
 	 // Building Parameters

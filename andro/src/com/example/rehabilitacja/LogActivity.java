@@ -67,8 +67,8 @@ public class LogActivity extends ActionBarActivity {
                     return "OK";
                 }
                 else{
-                        // Error in login
-                    return "NO";
+                    String error_log=json.getString(KEY_ERROR_MSG);
+                    return error_log;
                 }
                 
             } catch (JSONException e) {
@@ -88,6 +88,7 @@ public class LogActivity extends ActionBarActivity {
 				finish(); // zakoncz aktywnosc logowania
 			}
 			else{
+				
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
 				pasek.setVisibility(View.INVISIBLE);
@@ -98,9 +99,9 @@ public class LogActivity extends ActionBarActivity {
 				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
 				
 				tekst.setLayoutParams(p);
-				tekst.setText("Blad logowania");
+				tekst.setText(result);
 				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-				tekst.setTextSize(30);
+				tekst.setTextSize(20);
 								
 				zamknij.setVisibility(View.VISIBLE);
 				zamknij.setOnClickListener(new View.OnClickListener(){
