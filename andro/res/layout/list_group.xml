@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#000000">
- 
- 
-    <TextView
-        android:id="@+id/lblListHeader"
+    android:layout_height="50dp"
+    android:background="@drawable/btn_blue_glossy"
+    android:orientation="horizontal"
+    android:padding="8dp" >
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="80sp"
-        android:background="#000000"
-        android:textColor="#f9f93d" />
+        android:layout_height="fill_parent" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/klucz_1" />
+
+        <TextView
+            android:id="@+id/lblListHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView1"
+            style="@style/naglowekMenuText"
+            android:text="TextView" />
+
+    </RelativeLayout>
  
 </LinearLayout>
