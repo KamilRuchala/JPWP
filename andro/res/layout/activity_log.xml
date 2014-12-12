@@ -8,47 +8,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.rehabilitacja.LogActivity" >
-    
-    <EditText
-        android:id="@+id/editId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textId"
-        android:ems="10"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
 
     <EditText
         android:id="@+id/editPass"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textPass"
         android:ems="10"
+        android:background="#ffffff"
         android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/buttonZaloguj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editPass"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
-        android:background="@drawable/beznazwy"
-        style="@style/zaloguj_napis"
-        android:text="@string/logbutton" />
-
-    <TextView
-        android:id="@+id/textId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:text="@string/id"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textPass"
@@ -58,6 +27,40 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="@string/password"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/buttonZaloguj"
+        style="@style/zaloguj_napis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPass"
+        android:layout_below="@+id/editPass"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/beznazwy"
+        android:text="@string/logbutton" />
+
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/editPass"
+        android:layout_below="@+id/textId"
+        android:background="#ffffff"
+        android:ems="10"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="@string/id"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

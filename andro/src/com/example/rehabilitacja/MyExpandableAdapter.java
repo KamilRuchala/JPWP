@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MyExpandableAdapter extends BaseExpandableListAdapter {
@@ -17,12 +18,14 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
    private List<String> _listDataHeader; // header titles
    // child data in format of header title, child title
    private HashMap<String, List<String>> _listDataChild;
+   private List<Integer> _listIconHeader;
 
    public MyExpandableAdapter(Context context, List<String> listDataHeader,
-           HashMap<String, List<String>> listChildData) {
+           HashMap<String, List<String>> listChildData, List<Integer> listIconHeader) {
        this._context = context;
        this._listDataHeader = listDataHeader;
        this._listDataChild = listChildData;
+       this._listIconHeader = listIconHeader;
    }
 
    @Override
@@ -65,6 +68,10 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
    public Object getGroup(int groupPosition) {
        return this._listDataHeader.get(groupPosition);
    }
+   
+   public Object getGroupIcon(int groupPosition) {
+       return this._listIconHeader.get(groupPosition);
+   }
 
    @Override
    public int getGroupCount() {
@@ -79,16 +86,20 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
    @Override
    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
        String headerTitle = (String) getGroup(groupPosition);
+       int headerIcon = (Integer) getGroupIcon(groupPosition);
        if (convertView == null) {
            LayoutInflater infalInflater = (LayoutInflater) this._context
                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
            convertView = infalInflater.inflate(R.layout.list_group, null);
        }
 
-       TextView lblListHeader = (TextView) convertView
-               .findViewById(R.id.lblListHeader);
+       TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
        lblListHeader.setTypeface(null, Typeface.BOLD);
        lblListHeader.setText(headerTitle);
+       
+       ImageView imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
+       
+       imageView1.setImageResource(headerIcon); // tu bede dodawal poszczegolne elemeny z listy obrazkow
 
        return convertView;
    }

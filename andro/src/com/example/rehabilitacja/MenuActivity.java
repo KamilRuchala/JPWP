@@ -15,6 +15,7 @@ public class MenuActivity extends ActionBarActivity {
 	MyExpandableAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
+    List<Integer> listHeaderIcons;
     HashMap<String, List<String>> listDataChild;
 
 	@Override
@@ -28,7 +29,7 @@ public class MenuActivity extends ActionBarActivity {
         // preparing list data
         prepareListData();
  
-        listAdapter = new MyExpandableAdapter(this, listDataHeader, listDataChild);
+        listAdapter = new MyExpandableAdapter(this, listDataHeader, listDataChild, listHeaderIcons);
  
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -92,11 +93,12 @@ public class MenuActivity extends ActionBarActivity {
         List<String> menu6 = new ArrayList<String>();
         menu6.add(getString(R.string.menu61));
         menu6.add(getString(R.string.menu62));
+        menu6.add(getString(R.string.menu63));
         
         List<String> menu7 = new ArrayList<String>();
         menu7.add(getString(R.string.menu71));
         menu7.add(getString(R.string.menu72));
-        menu7.add(getString(R.string.menu73));
+        
  
        
         listDataChild.put(listDataHeader.get(0), menu1); // Header, Child data, wszystko do haszmapy
@@ -106,6 +108,17 @@ public class MenuActivity extends ActionBarActivity {
         listDataChild.put(listDataHeader.get(4), menu5);
         listDataChild.put(listDataHeader.get(5), menu6);
         listDataChild.put(listDataHeader.get(6), menu7);
+        
+        // Adding menu icons
+        
+        listHeaderIcons = new ArrayList<Integer>();
+        listHeaderIcons.add(R.drawable.hantle);
+        listHeaderIcons.add(R.drawable.kalendarz);
+        listHeaderIcons.add(R.drawable.chmurka);
+        listHeaderIcons.add(R.drawable.historia);
+        listHeaderIcons.add(R.drawable.dane);
+        listHeaderIcons.add(R.drawable.klucz_1);
+        listHeaderIcons.add(R.drawable.info);
     }
 }
 

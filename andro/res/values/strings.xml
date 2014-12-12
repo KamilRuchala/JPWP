@@ -37,11 +37,11 @@
     <string name="menu51">Dane ogolne</string>
     <string name="menu52">Lekarz prowadzacy</string>
     
-    <string name="menu61">Sprawdz uaktualnienia</string>
-    <string name="menu62">Pomoc</string>
+    <string name="menu61">Wyloguj</string>
+    <string name="menu62">Sprawdz uaktualnienia</string>
+    <string name="menu63">Pomoc</string>
     
-    <string name="menu71">Wyloguj</string>
-    <string name="menu72">O autorze</string>
-    <string name="menu73">Przejdz do strony autora</string>
+    <string name="menu71">O autorze</string>
+    <string name="menu72">Przejdz do strony autora</string>
 
 </resources>

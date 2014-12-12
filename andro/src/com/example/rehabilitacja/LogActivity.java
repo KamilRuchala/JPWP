@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -123,9 +124,14 @@ public class LogActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         id=(EditText) findViewById(R.id.editId);
 		pass=(EditText) findViewById(R.id.editPass);
+		
+		id.setText("12345");
+		pass.setText("miszcz");
+		
         zaloguj=(Button) findViewById(R.id.buttonZaloguj);
         zaloguj.setOnClickListener(new View.OnClickListener(){
         	@Override
