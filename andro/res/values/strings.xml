@@ -19,29 +19,23 @@
     <string name="menu5">Moje dane</string>
     <string name="menu6">Narzedzia</string>
     <string name="menu7">O aplikacji</string>
-    
     <string name="menu11">Plan na dzis</string>
     <string name="menu12">Plan na jutro</string>
     <string name="menu13">Plan tygodniowy</string>
-    
     <string name="menu21">Wyswietl kalendarz</string>
     <string name="menu23">Zaplanuj wizyte u lekarza</string>
     <string name="menu22">Wyswietl zaplanowane wizyty</string>
-    
     <string name="menu31">Przejdz do wiadomosci</string>
     <string name="menu32">Telefon do lekarza</string>
     <string name="menu33">SMS do lekarza</string>
-    
     <string name="menu41">Wyswietl historie wizyt</string>
-    
     <string name="menu51">Dane ogolne</string>
     <string name="menu52">Lekarz prowadzacy</string>
-    
     <string name="menu61">Wyloguj</string>
     <string name="menu62">Sprawdz uaktualnienia</string>
     <string name="menu63">Pomoc</string>
-    
     <string name="menu71">O autorze</string>
     <string name="menu72">Przejdz do strony autora</string>
+    <string name="title_activity_trening">TreningActivity</string>
 
 </resources>

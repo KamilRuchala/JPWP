@@ -36,8 +36,10 @@ public class LogActivity extends ActionBarActivity {
     private static String KEY_ERROR_MSG = "error_msg";
     private static String KEY_UID = "uid";
     private static String KEY_ID = "id";
+    private static String KEY_SID = "sid";
     
-    public static String uid = null; // uid nalezy zapisac w sesji, TO DO na pozniej
+    public static String uid = null;
+    public static String sid = null; // uid nalezy zapisac w sesji, TO DO na pozniej
 	
 	private class nowyWatek extends AsyncTask<String,Void,String>{
 
@@ -64,7 +66,8 @@ public class LogActivity extends ActionBarActivity {
 			Log.e("dupa",json.toString());
 			try {
                 if ("1".equals(json.getString(KEY_SUCCESS))) { // tu moze byc problem bo key_success nie jest stringiem
-                    uid=json.getString(KEY_UID);
+                    uid = json.getString(KEY_UID);
+                    sid = json.getString(KEY_SID);
                     return "OK";
                 }
                 else{

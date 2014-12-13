@@ -129,6 +129,11 @@ public class UserFunctions {
      * my functions
      * */
     
+    
+    /**
+     * Function to get user data
+     * Reset Database
+     * */
     public static JSONObject userData(String uid){
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
 	    params.add(new BasicNameValuePair("tag", dane_ogolne));
@@ -149,14 +154,18 @@ public class UserFunctions {
     }
     
     
-    public static JSONObject getTodayPlan(String uid){
+    /**
+     * Function to logout user's today plan
+     * Reset Database
+     * */
+    public static JSONObject getTodayPlan(String uid, String sid){
 	 // Building Parameters
 	    List<NameValuePair> params = new ArrayList<NameValuePair>();
 	    params.add(new BasicNameValuePair("tag", dzienny_plan));
 	    params.add(new BasicNameValuePair("uid", uid));
 	    //String json = jsonParser.getJSONFromUrl(URL, params);
         JSONObject jObj = null;
-        // pasuje tego stringa zesplitowac wzgledem kropek, pozniej petelka i liczenie elementow; pasuje zwrocic tablice bo prawie zawsze bedzie >1 jsonow
+        // pasuje tego stringa zesplitowac wzgledem myslnikow, pozniej petelka i liczenie elementow; pasuje zwrocic tablice bo prawie zawsze bedzie >1 jsonow
         return jObj;
     }
     
