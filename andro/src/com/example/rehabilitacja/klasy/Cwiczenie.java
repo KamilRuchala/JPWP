@@ -6,6 +6,10 @@ public class Cwiczenie {
 	private int powtorzenia;
 	private String link;
 	
+	public Cwiczenie(){
+
+	}
+	
 	public Cwiczenie(String nazwa, int serie, int powtorzenia, String link) {
 		super();
 		this.nazwa = nazwa;
