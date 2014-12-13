@@ -16,6 +16,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,8 +48,14 @@ public class UserFunctions {
 	public static String getServerResponse(List<NameValuePair> params){
     	// Making HTTP request
         try {
+        	HttpParams httpParameters = new BasicHttpParams();
+        	int timeoutConnection = 3000;
+        	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+        	int timeoutSocket = 3000;
+        	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+        	
             // defaultHttpClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
+            DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
             HttpPost httpPost = new HttpPost(URL);
             httpPost.setEntity(new UrlEncodedFormEntity(params));
  
@@ -55,11 +64,11 @@ public class UserFunctions {
             is = httpEntity.getContent();
  
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        	return "blad";
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+        	return "blad";
         } catch (IOException e) {
-            e.printStackTrace();
+        	return "blad";
         }
  
         try {
@@ -84,7 +93,8 @@ public class UserFunctions {
     /**
      * function make Login Request
      * */
-    public static JSONObject loginUser(String id, String pass){
+    @SuppressWarnings("finally")
+	public static JSONObject loginUser(String id, String pass){
     	// Building Parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", login_tag));
@@ -92,8 +102,19 @@ public class UserFunctions {
         params.add(new BasicNameValuePair("pass", pass));
         params.add(new BasicNameValuePair("ident", "0"));
         String json =  getServerResponse(params);
-        // return json
-        // Log.e("JSON", json.toString());
+        if("blad".equals(json)){ //jesli wystapil blad polaczenia
+        	JSONObject obj = new JSONObject();
+        	try {
+				obj.put("success", "-1");
+				obj.put("error_msg", "Serwer niedostepny");
+				
+			} catch (JSONException e) {
+				obj=null;
+			}
+        	finally{
+        		return obj;
+        	}
+        }
         
         // try parse the string to a JSON object
         try {

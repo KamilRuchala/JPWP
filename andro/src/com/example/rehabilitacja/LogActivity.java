@@ -60,12 +60,15 @@ public class LogActivity extends ActionBarActivity {
 		protected String doInBackground(String... arg0){
 			
 			
-			JSONObject json = UserFunctions.loginUser(arg0[0], arg0[1]); // tu jest problem
-			Log.e("dupa",json.toString());
+			JSONObject json = UserFunctions.loginUser(arg0[0], arg0[1]);
 			try {
-                if ("1".equals(json.getString(KEY_SUCCESS))) { // tu moze byc problem bo key_success nie jest stringiem
+                if ("1".equals(json.getString(KEY_SUCCESS))) { 
                     uid=json.getString(KEY_UID);
                     return "OK";
+                }
+                else if ("-1".equals(json.getString(KEY_SUCCESS))) {
+                	String error_log=json.getString(KEY_ERROR_MSG);
+                    return error_log;
                 }
                 else{
                     String error_log=json.getString(KEY_ERROR_MSG);
@@ -73,7 +76,7 @@ public class LogActivity extends ActionBarActivity {
                 }
                 
             } catch (JSONException e) {
-                return "BLAD";
+                return "Blad aplikacji";
             }
             
 		}
