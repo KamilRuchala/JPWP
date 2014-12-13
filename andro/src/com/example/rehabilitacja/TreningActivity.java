@@ -1,13 +1,19 @@
 package com.example.rehabilitacja;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.rehabilitacja.klasy.*;
+import android.view.View;
+import android.widget.Button;
 
 public class TreningActivity extends ActionBarActivity {
-
+	
+	final Context context = this;
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

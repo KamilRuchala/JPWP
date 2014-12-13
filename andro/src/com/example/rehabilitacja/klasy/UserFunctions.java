@@ -49,9 +49,9 @@ public class UserFunctions {
     	// Making HTTP request
         try {
         	HttpParams httpParameters = new BasicHttpParams();
-        	int timeoutConnection = 3000;
+        	int timeoutConnection = 5000;
         	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-        	int timeoutSocket = 3000;
+        	int timeoutSocket = 5000;
         	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         	
             // defaultHttpClient
@@ -81,6 +81,7 @@ public class UserFunctions {
             }
             is.close();
             json = sb.toString();
+            Log.e("dupcia",json);
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
@@ -137,14 +138,7 @@ public class UserFunctions {
         return false;
     }
      
-    /**
-     * Function to logout user
-     * Reset Database
-     * */
-    public boolean logoutUser(Context context){
-        
-        return true;
-    }
+   
     
     /**
      * my functions
@@ -179,15 +173,14 @@ public class UserFunctions {
      * Function to logout user's today plan
      * Reset Database
      * */
-    public static JSONObject getTodayPlan(String uid, String sid){
+    public static String getTodayPlan(String uid, String sid){
 	 // Building Parameters
 	    List<NameValuePair> params = new ArrayList<NameValuePair>();
 	    params.add(new BasicNameValuePair("tag", dzienny_plan));
 	    params.add(new BasicNameValuePair("uid", uid));
-	    //String json = jsonParser.getJSONFromUrl(URL, params);
-        JSONObject jObj = null;
-        // pasuje tego stringa zesplitowac wzgledem myslnikow, pozniej petelka i liczenie elementow; pasuje zwrocic tablice bo prawie zawsze bedzie >1 jsonow
-        return jObj;
+	    params.add(new BasicNameValuePair("sid", sid));
+	    return getServerResponse(params);
+	    //String[] tabJSON = json.split("-");
     }
     
 }

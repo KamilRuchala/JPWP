@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -40,6 +41,9 @@ public class LogActivity extends ActionBarActivity {
     
     public static String uid = null;
     public static String sid = null; // uid nalezy zapisac w sesji, TO DO na pozniej
+    
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedpreferences;
 	
 	private class nowyWatek extends AsyncTask<String,Void,String>{
 
@@ -68,6 +72,10 @@ public class LogActivity extends ActionBarActivity {
                 if ("1".equals(json.getString(KEY_SUCCESS))) { // tu moze byc problem bo key_success nie jest stringiem
                     uid = json.getString(KEY_UID);
                     sid = json.getString(KEY_SID);
+                    Editor editor = sharedpreferences.edit();
+                    editor.putString(KEY_UID, uid);
+                    editor.putString(KEY_SID, sid);
+                    editor.commit();
                     return "OK";
                 }
                 else if ("-1".equals(json.getString(KEY_SUCCESS))) {
@@ -174,8 +182,17 @@ public class LogActivity extends ActionBarActivity {
         new nowyWatek().execute(username,password);
      }
     
-    public void loginSuccess(String a){
-    	// TO DO new intent
+    @Override
+    protected void onResume() {
+       sharedpreferences=getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+       if (sharedpreferences.contains(KEY_UID))
+       {
+	       if(sharedpreferences.contains(KEY_SID)){
+	    	   Intent i = new Intent(this,MenuActivity.class);
+	    	   startActivity(i);
+	       }
+       }
+       super.onResume();
     }
     
 }

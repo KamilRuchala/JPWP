@@ -4,11 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+
+import com.example.rehabilitacja.klasy.UserFunctions;
 
 public class MenuActivity extends ActionBarActivity {
 	
@@ -17,6 +29,15 @@ public class MenuActivity extends ActionBarActivity {
     List<String> listDataHeader;
     List<Integer> listHeaderIcons;
     HashMap<String, List<String>> listDataChild;
+    
+    private static String KEY_UID = "uid";
+    private static String KEY_SID = "sid";
+    private String uid;
+    private String sid;
+    private String dalej;
+    private String OPTION_TAG="todayPlan";
+    final Context context = this;
+    
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +54,21 @@ public class MenuActivity extends ActionBarActivity {
  
         // setting list adapter
         expListView.setAdapter(listAdapter);
+        
+        expListView.setOnChildClickListener(new OnChildClickListener() {
+        	 
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            	if(getResources().getString(R.string.menu11).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                todayPlan();
+	            }
+            	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+            		logoutUser(v);
+            	}
+            	return false;
+            }
+        });
+        
 	}
 
 	@Override
@@ -53,6 +89,11 @@ public class MenuActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+    public void onBackPressed(){ //konieczne poniewaz przy powrocie do menu przy kliknieciu back'a znowu pojawia sie menu i backiem nie mozna zminimalizowac
+    	moveTaskToBack(true); 
+        }
 	
 	private void prepareListData() {
         listDataHeader = new ArrayList<String>();
@@ -120,5 +161,72 @@ public class MenuActivity extends ActionBarActivity {
         listHeaderIcons.add(R.drawable.klucz_1);
         listHeaderIcons.add(R.drawable.info);
     }
+	
+	private void todayPlan(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		new nowyWatek().execute(uid,sid,OPTION_TAG);
+	}
+	
+	 /**
+     * Function to logout user
+     * Reset Database
+     * */
+    public void logoutUser(View view){
+    	SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+    	Editor editor = sharedpreferences.edit();
+    	editor.clear();
+    	editor.commit();
+    	moveTaskToBack(true); 
+    	MenuActivity.this.finish();
+    }
+    
+    private class nowyWatek extends AsyncTask<String,Void,String>{
+
+		final Dialog dialog = new Dialog(context);
+		Button zamknij;
+		
+		@Override
+		protected void onPreExecute(){
+				
+	    	dialog.setContentView(R.layout.activity_login_dialog);
+	    	//dialog.setTitle("Logowanie");
+	    	zamknij = (Button) dialog.findViewById(R.id.zamknijButton);
+	    	zamknij.setVisibility(View.INVISIBLE);
+	    	
+	    	dialog.show();	
+	    	
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0){
+			String uid=arg0[0];
+			String sid=arg0[1];
+			String tag=arg0[2];
+			if("brak".equals(uid) || "brak".equals(sid)){
+				return "blad";
+			}
+			else{
+				return tag+"="+UserFunctions.getTodayPlan(uid, sid);
+			}
+		}
+		
+		@Override
+		protected void onPostExecute(String result){
+			String[] tablica = result.split("=");
+			String tag = new String(tablica[0]);
+			dalej=new String(tablica[1]);
+			Log.e("tag",tag);
+			if("blad".equals(dalej)){
+				Log.e("dupa","nie dziala");
+			}
+			else if(OPTION_TAG.equals(tag)){
+				dialog.dismiss();
+				Intent i = new Intent(context,TreningActivity.class);
+		    	startActivity(i);
+			}
+		}
+	}
 }
 
