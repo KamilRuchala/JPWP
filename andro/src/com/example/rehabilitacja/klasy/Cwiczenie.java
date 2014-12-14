@@ -2,15 +2,15 @@ package com.example.rehabilitacja.klasy;
 
 public class Cwiczenie {
 	private String nazwa;
-	private int serie;
-	private int powtorzenia;
+	private String serie;
+	private String powtorzenia;
 	private String link;
 	
 	public Cwiczenie(){
 
 	}
 	
-	public Cwiczenie(String nazwa, int serie, int powtorzenia, String link) {
+	public Cwiczenie(String nazwa, String serie, String powtorzenia, String link) {
 		super();
 		this.nazwa = nazwa;
 		this.serie = serie;
@@ -22,11 +22,11 @@ public class Cwiczenie {
 		return nazwa;
 	}
 
-	public int getSerie() {
+	public String getSerie() {
 		return serie;
 	}
 
-	public int getPowtorzenia() {
+	public String getPowtorzenia() {
 		return powtorzenia;
 	}
 

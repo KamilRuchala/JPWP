@@ -166,7 +166,10 @@ public class MenuActivity extends ActionBarActivity {
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
 		sid=sharedpreferences.getString(KEY_SID, "brak");
-		new nowyWatek().execute(uid,sid,OPTION_TAG);
+		Intent i = new Intent(this,TreningActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
 	}
 	
 	 /**
@@ -182,51 +185,6 @@ public class MenuActivity extends ActionBarActivity {
     	MenuActivity.this.finish();
     }
     
-    private class nowyWatek extends AsyncTask<String,Void,String>{
-
-		final Dialog dialog = new Dialog(context);
-		Button zamknij;
-		
-		@Override
-		protected void onPreExecute(){
-				
-	    	dialog.setContentView(R.layout.activity_login_dialog);
-	    	//dialog.setTitle("Logowanie");
-	    	zamknij = (Button) dialog.findViewById(R.id.zamknijButton);
-	    	zamknij.setVisibility(View.INVISIBLE);
-	    	
-	    	dialog.show();	
-	    	
-		}
-		
-		@Override
-		protected String doInBackground(String... arg0){
-			String uid=arg0[0];
-			String sid=arg0[1];
-			String tag=arg0[2];
-			if("brak".equals(uid) || "brak".equals(sid)){
-				return "blad";
-			}
-			else{
-				return tag+"="+UserFunctions.getTodayPlan(uid, sid);
-			}
-		}
-		
-		@Override
-		protected void onPostExecute(String result){
-			String[] tablica = result.split("=");
-			String tag = new String(tablica[0]);
-			dalej=new String(tablica[1]);
-			Log.e("tag",tag);
-			if("blad".equals(dalej)){
-				Log.e("dupa","nie dziala");
-			}
-			else if(OPTION_TAG.equals(tag)){
-				dialog.dismiss();
-				Intent i = new Intent(context,TreningActivity.class);
-		    	startActivity(i);
-			}
-		}
-	}
+    
 }
 

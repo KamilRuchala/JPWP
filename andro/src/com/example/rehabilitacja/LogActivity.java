@@ -69,7 +69,7 @@ public class LogActivity extends ActionBarActivity {
 			JSONObject json = UserFunctions.loginUser(arg0[0], arg0[1]);
 			try {
 
-                if ("1".equals(json.getString(KEY_SUCCESS))) { // tu moze byc problem bo key_success nie jest stringiem
+                if ("1".equals(json.getString(KEY_SUCCESS))) { 
                     uid = json.getString(KEY_UID);
                     sid = json.getString(KEY_SID);
                     Editor editor = sharedpreferences.edit();

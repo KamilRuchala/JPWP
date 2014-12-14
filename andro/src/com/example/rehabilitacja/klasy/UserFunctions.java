@@ -103,6 +103,7 @@ public class UserFunctions {
         params.add(new BasicNameValuePair("pass", pass));
         params.add(new BasicNameValuePair("ident", "0"));
         String json =  getServerResponse(params);
+        Log.d("test",json);
         if("blad".equals(json)){ //jesli wystapil blad polaczenia
         	JSONObject obj = new JSONObject();
         	try {
