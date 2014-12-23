@@ -120,7 +120,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 	           // Log.e("JSONParserTreningAct", "Error parsing data " + e.toString());
 	        }
 			for(int i=1;i<treatment_days.length;i++){
-				String day = treatment_days[0];
+				String day = treatment_days[i];
 				String[] tablica = day.split("-");
 				for(String tmp : tablica){
 					try {
@@ -145,6 +145,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 		@Override
 		protected void onPostExecute(Void result){
 			if(!error){
+				Log.d("post","u mnie ni mo");
 				for(int i=0; i<5;i++){
 					dynamicInt(i);
 				}

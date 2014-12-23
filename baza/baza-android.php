@@ -49,8 +49,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 				$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];//k
 			} //k
             echo json_encode($response);
-			//header("Refresh:2; URL=http://localhost/test/next.html");
-			//echo $dupa;
         } else {
             // user not found
             // echo json with error = 1
@@ -210,15 +208,21 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 			if ($dane != false && $dane['namba'] >= 1) {
 				$tmp=0;
 				$response["success"] = 1;
-				$stringjson=(string)json_encode($response); . "-";
+				$stringjson=(string)json_encode($response) . "--";
+				$previous_data="";
 				while($tmp < $dane['namba']){
 					$dane2 = $dane['wynik'][$tmp];
 					$response["nazwa"] = $dane2["nazwa"];
 					$response["serie"] = $dane2["serie"];
 					$response["powtorzenia"] = $dane2["powtorzenia"];
-					$response["data"] = $dane2["dzien_leczenia"];
 					$jason=(string)json_encode($response);
-					$stringjson = $stringjson . $jason . "-";
+					if($dane2["dzien_leczenia"] != $previous_data){
+						$stringjson = $stringjson . $jason . "--";
+						$previous_data = $dane2["dzien_leczenia"];
+					}
+					else{
+						$stringjson = $stringjson . $jason . "-";
+					}
 					$tmp = $tmp + 1;
 				}
 				echo $stringjson;
