@@ -37,5 +37,6 @@
     <string name="menu71">O autorze</string>
     <string name="menu72">Przejdz do strony autora</string>
     <string name="title_activity_trening">TreningActivity</string>
+    <string name="title_activity_player">PlayerActivity</string>
 
 </resources>

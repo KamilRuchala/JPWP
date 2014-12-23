@@ -9,7 +9,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,8 +19,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -35,7 +40,31 @@ public class TreningActivity extends ActionBarActivity {
 	private String uid;
 	private String sid;
 	private static JSONObject jObj = null;
+	private String operation_tag = null;
 	LinearLayout linearLayout;
+	
+	private boolean error = false;
+	private String error_key = null;
+	
+	private List<Integer> buttonsId = new ArrayList<Integer>();
+	private List<String> links = new ArrayList<String>();
+	
+	OnClickListener clicks=new OnClickListener() {
+
+	    @Override
+	    public void onClick(View v) {
+	    	
+	    	int id1 = v.getId();
+	    	for(int a=0; a<links.size();a++){
+		    	if(id1 == buttonsId.get(a)){
+		    		String link = new String("http://m.youtube.com/"+(String)links.get(a));
+		    		Uri u = Uri.parse(link);
+		    		Intent i = new Intent(Intent.ACTION_VIEW,u);
+		    		startActivity(i);
+		    	}
+	    	}
+	    }
+	};
 		
 	@SuppressLint("InflateParams") @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +75,7 @@ public class TreningActivity extends ActionBarActivity {
 		Bundle bb = getIntent().getExtras();
 		uid=bb.getString("uid");
 		sid=bb.getString("sid");
+		operation_tag=bb.getString("tag");
 		Log.e("coje",sid);
 		new nowyWatek().execute();
 			
@@ -141,6 +171,9 @@ public class TreningActivity extends ActionBarActivity {
 	        Button myButton = new Button(this);
 			myButton.setText("Jak poprawnie wykonac");
 			myButton.setId(id);
+			buttonsId.add(id);
+			links.add((String) lista.get(i).getLink());
+			myButton.setOnClickListener(clicks);
 	        id++;
 	        myButton.setBackgroundResource(R.drawable.btn_blue_matte);
 	        
@@ -168,32 +201,47 @@ public class TreningActivity extends ActionBarActivity {
 
 		final Dialog dialog = new Dialog(context);
 		Button zamknij;
+		TextView pleaseWait;
 		
 		@Override
 		protected void onPreExecute(){
-				
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    	dialog.setContentView(R.layout.activity_login_dialog);
 	    	//dialog.setTitle("Logowanie");
 	    	zamknij = (Button) dialog.findViewById(R.id.zamknijButton);
 	    	zamknij.setVisibility(View.INVISIBLE);
-	    	
+	    	pleaseWait = (TextView) dialog.findViewById(R.id.pleaseWait);
+	    	pleaseWait.setText("Loading");
 	    	dialog.show();	
 	    	
 		}
 		
 		@Override
 		protected Void doInBackground(Void... params){
-			String odpowiedz = UserFunctions.getTodayPlan(uid, sid);
+			String odpowiedz = null;
+			if("today".equals(operation_tag)){
+				odpowiedz = UserFunctions.getTodayPlan(uid, sid);
+			}
+			else{
+				odpowiedz = UserFunctions.getTommorowPlan(uid, sid);
+			}
 			
 			String[] tablica = odpowiedz.split("-");
-			Log.e("odpowiedz", tablica[0]);
+			Log.e("odpowiedz", Integer.toString(tablica.length));
 			for(String tmp : tablica){
 				try {
-					jObj = new JSONObject(tmp);            
+					jObj = new JSONObject(tmp); 
 		        } catch (JSONException e) {
 		            Log.e("JSONParserTreningAct", "Error parsing data " + e.toString());
+		            break;
 		        }
+				
 				try {
+					if("0".equals(jObj.getString("success"))){
+						error = true;
+						error_key = jObj.getString("error_msg");
+						return null;
+					}
 					lista.add(new Cwiczenie(jObj.getString("nazwa"),jObj.getString("serie"),jObj.getString("powtorzenia"),jObj.getString("link")));
 				} catch (JSONException e) {
 					Log.e("JSON Parser", "Error parsing data " + e.toString());
@@ -204,8 +252,37 @@ public class TreningActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(Void result){
-			dodajCwiczenie();
-			dialog.dismiss();
+			if(error == false){
+				dodajCwiczenie();
+				dialog.dismiss();
+			}
+			else{
+				
+				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
+				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
+				pasek.setVisibility(View.INVISIBLE);
+				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+				
+				p.addRule(RelativeLayout.BELOW, R.id.image);
+				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
+				
+				//tekst.setLayoutParams(p);
+				tekst.setText(error_key);
+				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+				tekst.setTextSize(20);
+								
+				zamknij.setVisibility(View.VISIBLE);
+				zamknij.setOnClickListener(new View.OnClickListener(){
+		     	@Override
+	            public void onClick(View v) {
+		     		dialog.dismiss();
+		     		Intent i = new Intent(context,MenuActivity.class);
+					startActivity(i);
+		        }
+				});
+				
+			}
 		}
 	}
 }

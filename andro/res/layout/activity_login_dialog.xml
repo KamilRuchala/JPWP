@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
- 
+    android:layout_height="fill_parent"
+    android:windowNoTitle="true" >
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="43dp" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/pleaseWait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pleaseWait"
+            style="@style/okno_napis"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/zamknijButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pleaseWait"
+        android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
         android:text="@string/zamknijButton" />
 
-    <TextView
-        android:id="@+id/pleaseWait"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar1"
-        android:layout_centerHorizontal="true"
-        android:text="@string/pleaseWait"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-/>
- 
-     
- 
 </RelativeLayout>

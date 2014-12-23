@@ -26,7 +26,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".MenuActivity"
@@ -35,7 +36,13 @@
         </activity>
         <activity
             android:name=".TreningActivity"
-            android:label="@string/title_activity_trening" >
+            android:label="@string/title_activity_trening"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".PlayerActivity"
+            android:label="@string/title_activity_player"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
 

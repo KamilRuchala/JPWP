@@ -30,7 +30,7 @@ public class UserFunctions {
      
     // Testing in localhost using wamp or xampp 
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
-    private static String URL = "http://192.168.0.16/test/index2.php";
+    private static String URL = "http://192.168.1.15/test/index2.php";
     
     static InputStream is = null;
     static JSONObject jObj = null;
@@ -38,6 +38,7 @@ public class UserFunctions {
     
     private static String login_tag = "login";
     private static String dzienny_plan = "dzienny_plan";
+    private static String tommorow_plan = "jutrzejszy_plan";
     private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -183,5 +184,15 @@ public class UserFunctions {
 	    return getServerResponse(params);
 	    //String[] tabJSON = json.split("-");
     }
+    
+    public static String getTommorowPlan(String uid, String sid){
+   	 // Building Parameters
+   	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+   	    params.add(new BasicNameValuePair("tag", tommorow_plan));
+   	    params.add(new BasicNameValuePair("uid", uid));
+   	    params.add(new BasicNameValuePair("sid", sid));
+   	    return getServerResponse(params);
+   	    //String[] tabJSON = json.split("-");
+       }
     
 }

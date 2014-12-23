@@ -4,23 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-
-import com.example.rehabilitacja.klasy.UserFunctions;
 
 public class MenuActivity extends ActionBarActivity {
 	
@@ -60,7 +54,10 @@ public class MenuActivity extends ActionBarActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             	if(getResources().getString(R.string.menu11).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
-	                todayPlan();
+	                todayPlan("today");
+	            }
+            	if(getResources().getString(R.string.menu12).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                todayPlan("tommorow");
 	            }
             	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
             		logoutUser(v);
@@ -162,13 +159,14 @@ public class MenuActivity extends ActionBarActivity {
         listHeaderIcons.add(R.drawable.info);
     }
 	
-	private void todayPlan(){
+	private void todayPlan(String operation_tag){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
 		sid=sharedpreferences.getString(KEY_SID, "brak");
 		Intent i = new Intent(this,TreningActivity.class);
 		i.putExtra(KEY_UID, uid);
 		i.putExtra(KEY_SID, sid);
+		i.putExtra("tag",operation_tag);
  	   	startActivity(i);
 	}
 	

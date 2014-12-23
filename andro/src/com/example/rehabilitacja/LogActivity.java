@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -52,7 +53,7 @@ public class LogActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPreExecute(){
-	     	
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    	dialog.setContentView(R.layout.activity_login_dialog);
 	    	//dialog.setTitle("Logowanie");
 	    	zamknij = (Button) dialog.findViewById(R.id.zamknijButton);
@@ -108,13 +109,16 @@ public class LogActivity extends ActionBarActivity {
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
 				pasek.setVisibility(View.INVISIBLE);
+				
+				
 				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 				
-				p.addRule(RelativeLayout.BELOW, R.id.image);
-				p.addRule(RelativeLayout.CENTER_IN_PARENT, R.id.image);
+				//p.addRule(RelativeLayout.BELOW, R.id.image);
+				//p.addRule(RelativeLayout.CENTER_IN_PARENT);
 				
-				tekst.setLayoutParams(p);
+				//tekst.setLayoutParams(p);
+				
 				tekst.setText(result);
 				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 				tekst.setTextSize(20);
@@ -126,6 +130,7 @@ public class LogActivity extends ActionBarActivity {
 		     		dialog.dismiss();
 		        }
 				});
+				
 			}
 		}
 	}
