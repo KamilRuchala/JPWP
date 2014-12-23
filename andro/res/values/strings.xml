@@ -38,5 +38,6 @@
     <string name="menu72">Przejdz do strony autora</string>
     <string name="title_activity_trening">TreningActivity</string>
     <string name="title_activity_player">PlayerActivity</string>
+    <string name="title_activity_week_plan">WeekPlanActivity</string>
 
 </resources>

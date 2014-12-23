@@ -26,8 +26,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
             android:name=".MenuActivity"
@@ -40,9 +40,8 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".PlayerActivity"
-            android:label="@string/title_activity_player"
-            android:screenOrientation="landscape" >
+            android:name=".WeekPlanActivity"
+            android:label="@string/title_activity_week_plan" >
         </activity>
     </application>
 

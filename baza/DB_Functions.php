@@ -123,7 +123,7 @@ class DB_Functions {
 	public function getTodayPlan($uid){
 		$today = date('Y/m/d');
 		$rows = array();
-		$result = mysql_query("SELECT c.nazwa, d.serie, d.powtorzenia, c.link FROM Cwiczenia c, dzienny_plan d WHERE c.cid = d.cid AND d.dzien_leczenia = '$today'  AND (d.pid = (SELECT p.pid from Pacjenci p, login l WHERE p.login = l.id AND l.unique_id='$uid'))");
+		$result = mysql_query("SELECT c.nazwa as nazwa, d.serie as serie, d.powtorzenia as powtorzenia, c.link as link FROM Cwiczenia c, dzienny_plan d WHERE c.cid = d.cid AND d.dzien_leczenia = '$today'  AND (d.pid = (SELECT p.pid from Pacjenci p, login l WHERE p.login = l.id AND l.unique_id='$uid'))");
 		$no_of_rows = mysql_num_rows($result);
 		if ($no_of_rows == 1) {
             $result = mysql_fetch_array($result);
@@ -143,7 +143,7 @@ class DB_Functions {
 	public function getTommorowPlan($uid){
 		$today = date_create(date('Y/m/d'));
 		date_modify($today, '+1 day');
-		date_format($today, 'Y/m/d');
+		$today = date_format($today, 'Y/m/d');
 		$rows = array();
 		$result = mysql_query("SELECT c.nazwa, d.serie, d.powtorzenia, c.link FROM Cwiczenia c, dzienny_plan d WHERE c.cid = d.cid AND d.dzien_leczenia = '$today'  AND (d.pid = (SELECT p.pid from Pacjenci p, login l WHERE p.login = l.id AND l.unique_id='$uid'))");
 		$no_of_rows = mysql_num_rows($result);
@@ -163,7 +163,25 @@ class DB_Functions {
 	}
 	
 	public function getWeekPlan($uid){
-	
+		$today = date_create(date('Y/m/d'));
+		date_modify($today, '+2 day');
+		$today2 = date_format($today, 'Y/m/d');
+		date_modify($today, '+4 day');
+		$today3 = date_format($today, 'Y/m/d');
+		$rows = array();
+		$result = mysql_query("SELECT c.nazwa, d.serie, d.powtorzenia, d.dzien_leczenia FROM Cwiczenia c, dzienny_plan d 
+		WHERE c.cid = d.cid AND d.dzien_leczenia >= '$today2' AND d.dzien_leczenia <= '$today3' AND (d.pid = (SELECT p.pid from Pacjenci p, login l 
+		WHERE p.login = l.id AND l.unique_id='$uid'))");
+		$no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows >= 1) {
+            while($row = mysql_fetch_array($result)) {
+				array_push($rows,$row);
+			}
+			return array('namba' => $no_of_rows, 'wynik' => $rows);
+        } 
+		else {
+            return false;
+        }
 	}
 }
  

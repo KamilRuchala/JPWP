@@ -17,6 +17,14 @@ public class Cwiczenie {
 		this.powtorzenia = powtorzenia;
 		this.link = link;
 	}
+	
+	public Cwiczenie(String nazwa, String serie, String powtorzenia) {
+		super();
+		this.nazwa = nazwa;
+		this.serie = serie;
+		this.powtorzenia = powtorzenia;
+		this.link = "";
+	}
 
 	public String getNazwa() {
 		return nazwa;

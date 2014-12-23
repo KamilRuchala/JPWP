@@ -39,6 +39,7 @@ public class UserFunctions {
     private static String login_tag = "login";
     private static String dzienny_plan = "dzienny_plan";
     private static String tommorow_plan = "jutrzejszy_plan";
+    private static String week_plan = "week_plan";
     private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -182,7 +183,6 @@ public class UserFunctions {
 	    params.add(new BasicNameValuePair("uid", uid));
 	    params.add(new BasicNameValuePair("sid", sid));
 	    return getServerResponse(params);
-	    //String[] tabJSON = json.split("-");
     }
     
     public static String getTommorowPlan(String uid, String sid){
@@ -192,7 +192,15 @@ public class UserFunctions {
    	    params.add(new BasicNameValuePair("uid", uid));
    	    params.add(new BasicNameValuePair("sid", sid));
    	    return getServerResponse(params);
-   	    //String[] tabJSON = json.split("-");
        }
+    
+    public static String getWeekPlan(String uid, String sid){
+      	 // Building Parameters
+      	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+      	    params.add(new BasicNameValuePair("tag", week_plan));
+      	    params.add(new BasicNameValuePair("uid", uid));
+      	    params.add(new BasicNameValuePair("sid", sid));
+      	    return getServerResponse(params);
+          }
     
 }

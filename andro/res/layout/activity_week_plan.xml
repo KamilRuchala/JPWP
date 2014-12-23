@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:background="@drawable/btn_orange_matte" >
+
+        <ViewFlipper
+            android:id="@+id/viewflipper"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="6dp" >
+            
+            <ScrollView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLay1"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:orientation="vertical" >
+
+        		</LinearLayout>
+    		</ScrollView>
+    		
+            <ScrollView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLay2"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:orientation="vertical" >
+
+        		</LinearLayout>
+    		</ScrollView>
+    		
+            <ScrollView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLay3"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:orientation="vertical" >
+
+        		</LinearLayout>
+    		</ScrollView>
+    		
+            <ScrollView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLay4"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:orientation="vertical" >
+
+        		</LinearLayout>
+    		</ScrollView>
+    		
+            <ScrollView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLay5"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:orientation="vertical" >
+
+        		</LinearLayout>
+    		</ScrollView>
+ 	    
+            
+        </ViewFlipper>
+</LinearLayout>

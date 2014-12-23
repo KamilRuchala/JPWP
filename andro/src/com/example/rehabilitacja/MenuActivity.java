@@ -56,8 +56,11 @@ public class MenuActivity extends ActionBarActivity {
             	if(getResources().getString(R.string.menu11).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                todayPlan("today");
 	            }
-            	if(getResources().getString(R.string.menu12).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+            	else if(getResources().getString(R.string.menu12).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                todayPlan("tommorow");
+	            }
+            	else if(getResources().getString(R.string.menu13).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                weekPlan();
 	            }
             	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
             		logoutUser(v);
@@ -167,6 +170,16 @@ public class MenuActivity extends ActionBarActivity {
 		i.putExtra(KEY_UID, uid);
 		i.putExtra(KEY_SID, sid);
 		i.putExtra("tag",operation_tag);
+ 	   	startActivity(i);
+	}
+	
+	private void weekPlan(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this,WeekPlanActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
  	   	startActivity(i);
 	}
 	

@@ -9,9 +9,8 @@
   /**
  * check for POST request 
  */
- session_start(); //k
- //$dupa='dupa';
- //$przykro='przykro';
+ 
+
  
 if (isset($_POST['tag']) && $_POST['tag'] != '') {
     // get tag
@@ -27,6 +26,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     // check for tag type
     if ($tag == "login") { //login wporzo
         // Request type is check Login
+		session_start();
         $id = $_POST['id'];
         $password = $_POST['pass'];
 		$ident = $_POST['ident'];
@@ -37,14 +37,14 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             // user found
             // echo json with success = 1
             $response["success"] = 1;
+			$response["sid"] = session_id();
             $response["uid"] = $user["unique_id"];
             $response["user"]["ident"] = $user["ident"];
             $response["user"]["id"] = $user["id"];
             $response["user"]["created_at"] = $user["created_at"];
             $response["user"]["updated_at"] = $user["updated_at"];
-			if (!isset($_SESSION['inicjuj'])) //k
+			if (!isset($_SESSION['zalogowany'])) //k
 			{ //k
-				session_regenerate_id();
 				$_SESSION['zalogowany'] = $user["unique_id"];//k
 				$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];//k
 			} //k
@@ -93,6 +93,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     }
 	else if ($tag == 'dane_ogolne'){
 		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
 		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
 			$data = $db->getPatientDataById($uid);
 			if ($data != false) {
@@ -119,9 +120,13 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 	
 	else if ($tag == 'dzienny_plan'){
 		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start(); 
 		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
 			$dane = $db->getTodayPlan($uid);
 			if ($dane != false && $dane['namba'] == 1) {
+				$dane=$dane['wynik'];
 				$response["success"] = 1;
                 $response["nazwa"] = $dane["nazwa"];
                 $response["serie"] = $dane["serie"];
@@ -140,12 +145,13 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 					$response["powtorzenia"] = $dane2["powtorzenia"];
 					$response["link"] = $dane2["link"];
 					$jason=(string)json_encode($response);
-					$stringjson = $stringjson . $jason . ".";
+					$stringjson = $stringjson . $jason . "-";
 					$tmp = $tmp + 1;
 				}
 				echo $stringjson;
 			}
 			else{
+				$response["success"] = 0;
 				$response["error"] = 1;
 				$response["error_msg"] = "Blad! Dane niedostepne";
 				echo json_encode($response);
@@ -155,9 +161,13 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 	
 	else if ($tag == 'jutrzejszy_plan'){
 		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
 		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
-			$dane = $db->getTodayPlan($uid);
+			$dane = $db->getTommorowPlan($uid);
 			if ($dane != false && $dane['namba'] == 1) {
+				$dane=$dane['wynik'];
 				$response["success"] = 1;
                 $response["nazwa"] = $dane["nazwa"];
                 $response["serie"] = $dane["serie"];
@@ -176,12 +186,13 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 					$response["powtorzenia"] = $dane2["powtorzenia"];
 					$response["link"] = $dane2["link"];
 					$jason=(string)json_encode($response);
-					$stringjson = $stringjson . $jason . ".";
+					$stringjson = $stringjson . $jason . "-";
 					$tmp = $tmp + 1;
 				}
 				echo $stringjson;
 			}
 			else{
+				$response["success"] = 0;
 				$response["error"] = 1;
 				$response["error_msg"] = "Blad! Dane niedostepne";
 				echo json_encode($response);
@@ -189,8 +200,36 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		}
 	}
 	
-	else if ($tag == 'tygodniowy_plan'){
-
+	else if ($tag == 'week_plan'){
+		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getWeekPlan($uid);
+			if ($dane != false && $dane['namba'] >= 1) {
+				$tmp=0;
+				$response["success"] = 1;
+				$stringjson=(string)json_encode($response); . "-";
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response["nazwa"] = $dane2["nazwa"];
+					$response["serie"] = $dane2["serie"];
+					$response["powtorzenia"] = $dane2["powtorzenia"];
+					$response["data"] = $dane2["dzien_leczenia"];
+					$jason=(string)json_encode($response);
+					$stringjson = $stringjson . $jason . "-";
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
 	}
 	
 	else if ($tag == 'wyloguj'){
