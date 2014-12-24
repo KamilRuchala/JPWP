@@ -40,7 +40,7 @@ public class UserFunctions {
     private static String dzienny_plan = "dzienny_plan";
     private static String tommorow_plan = "jutrzejszy_plan";
     private static String week_plan = "week_plan";
-    private static String dane_ogolne = "dane_ogolne";
+    //private static String dane_ogolne = "dane_ogolne";
      
     // constructor
     public UserFunctions(){
@@ -147,29 +147,6 @@ public class UserFunctions {
      * my functions
      * */
     
-    
-    /**
-     * Function to get user data
-     * Reset Database
-     * */
-    public static JSONObject userData(String uid){
-    	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	    params.add(new BasicNameValuePair("tag", dane_ogolne));
-	    params.add(new BasicNameValuePair("uid", uid));
-	    String json =  getServerResponse(params);
-        // return json
-        // Log.e("JSON", json.toString());
-        
-        // try parse the string to a JSON object
-        try {
-            jObj = new JSONObject(json);            
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
- 
-        // return JSON String
-        return jObj;
-    }
     
     
     /**

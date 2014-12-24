@@ -1,6 +1,10 @@
 package com.example.rehabilitacja;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,12 +45,14 @@ public class WeekPlanActivity extends ActionBarActivity {
 	private String uid, sid;
 	private int id = 5;
 	private boolean error = false;
+	private boolean[] freeTime = new boolean[5];
 	private String error_msg = null;
 	private static JSONObject jObj = null;
-	LinearLayout linearLayout1, linearLayout2, linearLayout3, linearLayout4, linearLayout5;
 	
 	private ViewFlipper viewFlipper;
     private float lastX;
+    
+    private List<String> daty = new ArrayList<String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +128,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 			for(int i=1;i<treatment_days.length;i++){
 				String day = treatment_days[i];
 				String[] tablica = day.split("-");
+				List<Cwiczenie> lista = new ArrayList<Cwiczenie>();
 				for(String tmp : tablica){
 					try {
 						jObj = new JSONObject(tmp); 
@@ -131,13 +138,15 @@ public class WeekPlanActivity extends ActionBarActivity {
 			        }
 					
 					try {
-						List<Cwiczenie> lista = new ArrayList<Cwiczenie>();
+						if("free".equals(jObj.getString("nazwa"))){
+							freeTime[i-1] = true;
+						}
 						lista.add(new Cwiczenie(jObj.getString("nazwa"),jObj.getString("serie"),jObj.getString("powtorzenia")));
-						hm.put(i-1, lista);
 					} catch (JSONException e) {
 						Log.e("JSON Parser", "Error parsing data " + e.toString());
 					}
 				}
+				hm.put(i-1, lista);
 			}
 			return null;
 		}
@@ -145,8 +154,8 @@ public class WeekPlanActivity extends ActionBarActivity {
 		@Override
 		protected void onPostExecute(Void result){
 			if(!error){
-				Log.d("post","u mnie ni mo");
-				for(int i=0; i<5;i++){
+				for(int i=0; i<hm.size();i++){
+					generujDaty();
 					dynamicInt(i);
 				}
 				dialog.dismiss();
@@ -182,16 +191,41 @@ public class WeekPlanActivity extends ActionBarActivity {
 	private void dynamicInt(int a) {
 		List<Cwiczenie> lista = hm.get(a);
 		LinearLayout linearLayout = layoutList.get(a);
+		String data = daty.get(a);
+		if(freeTime[a]){
+			linearLayout = rest(linearLayout, data);
+			return;
+		}
+		
+		TextView data1 = new TextView(context);
+        data1.setText(data);
+        data1.setId(id);
+        id++;
+        data1.setBackgroundResource(R.drawable.btn_black);
+        data1.setTextAppearance(context, R.style.naglowekTrening);
+        data1.setGravity(Gravity.CENTER_HORIZONTAL);
+        
+        ((LinearLayout) layoutList.get(a)).addView(data1);
+        
+        TextView przerwa9 = new TextView(this);
+        przerwa9.setText("");
+        przerwa9.setTextAppearance(this, R.style.naglowekTreningWeek);
+        przerwa9.setId(id);
+        id++;
+        przerwa9.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ((LinearLayout) linearLayout).addView(przerwa9);
 		for(int i = 0; i < lista.size(); i++){
+			
 	        TextView tytul = new TextView(context);
 	        tytul.setText("Cwiczenie "+Integer.toString(i+1));
 	        tytul.setId(id);
 	        id++;
 	        tytul.setBackgroundResource(R.drawable.btn_green_matte);
-	        tytul.setTextAppearance(context, R.style.naglowekTrening);
+	        tytul.setTextAppearance(context, R.style.naglowekTreningWeek);
 	        tytul.setGravity(Gravity.CENTER_HORIZONTAL);
 	        
-	        ((LinearLayout) linearLayout).addView(tytul);
+	        ((LinearLayout) layoutList.get(a)).addView(tytul);
 	        
 	        TextView przerwa = new TextView(context);
 	        przerwa.setText("");
@@ -199,7 +233,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 	        id++;
 	        przerwa.setGravity(Gravity.CENTER_HORIZONTAL);
 	
-	        ((LinearLayout) linearLayout).addView(przerwa);
+	        ((LinearLayout) layoutList.get(a)).addView(przerwa);
 	        
 	        TextView nazwaCwiczenia = new TextView(context);
 	        nazwaCwiczenia.setText( (String)lista.get(i).getNazwa());
@@ -208,7 +242,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 	        nazwaCwiczenia.setTextAppearance(context, R.style.planTreningu);
 	        nazwaCwiczenia.setGravity(Gravity.CENTER_HORIZONTAL);
 	
-	        ((LinearLayout) linearLayout).addView(nazwaCwiczenia);
+	        ((LinearLayout) layoutList.get(a)).addView(nazwaCwiczenia);
 	        
 	        TextView serie = new TextView(context);
 	        serie.setText("("+(String)lista.get(i).getSerie()+" Serie)");
@@ -217,7 +251,7 @@ public class WeekPlanActivity extends ActionBarActivity {
 	        serie.setTextAppearance(context, R.style.planTreninguSmall);
 	        serie.setGravity(Gravity.CENTER_HORIZONTAL);
 	
-	        ((LinearLayout) linearLayout).addView(serie);
+	        ((LinearLayout) layoutList.get(a)).addView(serie);
 	        
 	        TextView przerwa2 = new TextView(context);
 	        przerwa2.setText("");
@@ -225,7 +259,8 @@ public class WeekPlanActivity extends ActionBarActivity {
 	        id++;
 	        przerwa2.setGravity(Gravity.CENTER_HORIZONTAL);
 	
-	        ((LinearLayout) linearLayout).addView(przerwa2);
+	        ((LinearLayout) layoutList.get(a)).addView(przerwa2);
+	        
 	        
 	        int liczba_serii = Integer.parseInt((String)lista.get(i).getSerie());
 	        for(int j=1;j<=liczba_serii;j++){
@@ -234,7 +269,8 @@ public class WeekPlanActivity extends ActionBarActivity {
 		        d.setId(id);
 		        id++;
 		        d.setTextAppearance(context, R.style.planTreninguMedium);
-		        ((LinearLayout) linearLayout).addView(d);
+		        
+		        ((LinearLayout) layoutList.get(a)).addView(d);
 	        }
 	        
 	        TextView przerwa3 = new TextView(context);
@@ -242,62 +278,97 @@ public class WeekPlanActivity extends ActionBarActivity {
 	        przerwa3.setId(id);
 	        id++;
 	        przerwa3.setGravity(Gravity.CENTER_HORIZONTAL);
-	        ((LinearLayout) linearLayout).addView(przerwa3);
+	        ((LinearLayout) layoutList.get(a)).addView(przerwa3);
 	        
 	        TextView przerwa4 = new TextView(context);
 	        przerwa4.setText("");
 	        przerwa4.setId(id);
 	        id++;
 	        przerwa4.setGravity(Gravity.CENTER_HORIZONTAL);
-	        ((LinearLayout) linearLayout).addView(przerwa4);
+	        ((LinearLayout) layoutList.get(a)).addView(przerwa4);
 	        
 		}
-		layoutList.set(a,linearLayout);
 	}
 	
-	// Using the following method, we will handle all screen swaps.
-    public boolean onTouchEvent(MotionEvent touchevent) {
-    	switch (touchevent.getAction()) {
-        
-        case MotionEvent.ACTION_DOWN: 
-        	lastX = touchevent.getX();
-            break;
-        case MotionEvent.ACTION_UP: 
-            float currentX = touchevent.getX();
-            
-            // Handling left to right screen swap.
-            if (lastX < currentX) {
-            	
-            	// If there aren't any other children, just break.
-                if (viewFlipper.getDisplayedChild() == 0)
-                	break;
-                
-                // Next screen comes in from left.
-                viewFlipper.setInAnimation(this, R.anim.slide_in_from_left);
-                // Current screen goes out from right. 
-                viewFlipper.setOutAnimation(this, R.anim.slide_out_to_right);
-                
-                // Display next screen.
-                viewFlipper.showNext();
-             }
-                                     
-            // Handling right to left screen swap.
-             if (lastX > currentX) {
-            	 
-            	 // If there is a child (to the left), kust break.
-            	 if (viewFlipper.getDisplayedChild() == 1)
-            		 break;
+	 public boolean onTouchEvent(MotionEvent touchevent) {
+	        switch (touchevent.getAction()) {
+	 
+	        case MotionEvent.ACTION_DOWN: {
+	            lastX = touchevent.getX();
+	            break;
+	        }
+	        case MotionEvent.ACTION_UP: {
+	            float currentX = touchevent.getX();
+	 
+	            if (lastX < currentX) {
+	 
+	                if (viewFlipper.getDisplayedChild() == 0)
+	                    break;
+	 
+	                viewFlipper.setInAnimation(this, R.anim.slide_in_from_left);
+	                viewFlipper.setOutAnimation(this, R.anim.slide_out_to_right);
+	                // Show The Previous Screen
+	                viewFlipper.showPrevious();
+	            }
+	 
+	            // if right to left swipe on screen
+	            if (lastX > currentX) {
+	                if (viewFlipper.getDisplayedChild() == 4)
+	                    break;
+	 
+	                viewFlipper.setInAnimation(this, R.anim.slide_in_from_right);
+	                viewFlipper.setOutAnimation(this, R.anim.slide_out_to_left);
+	                // Show the next Screen
+	                viewFlipper.showNext();
+	            }
+	            break;
+	        }
+	        }
+	        return false;
+	    }
     
-            	 // Next screen comes in from right.
-            	 viewFlipper.setInAnimation(this, R.anim.slide_in_from_right);
-            	// Current screen goes out from left. 
-            	 viewFlipper.setOutAnimation(this, R.anim.slide_out_to_left);
-                 
-            	// Display previous screen.
-                 viewFlipper.showPrevious();
-             }
-             break;
-    	 }
-         return false;
+    private LinearLayout rest(LinearLayout linearLayout, String data){
+    	
+    	TextView data1 = new TextView(context);
+        data1.setText(data);
+        data1.setId(id);
+        id++;
+        data1.setBackgroundResource(R.drawable.btn_black);
+        data1.setTextAppearance(context, R.style.naglowekTrening);
+        data1.setGravity(Gravity.CENTER_HORIZONTAL);
+        
+        ((LinearLayout) linearLayout).addView(data1);
+    	
+        TextView przerwa5 = new TextView(this);
+        przerwa5.setText("");
+        przerwa5.setTextAppearance(this, R.style.naglowekTreningWeek);
+        przerwa5.setId(id);
+        id++;
+        przerwa5.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ((LinearLayout) linearLayout).addView(przerwa5);
+        
+        TextView tytul = new TextView(this);
+        tytul.setText("Dzien odpoczynku");
+        tytul.setId(id);
+        id++;
+        tytul.setBackgroundResource(R.drawable.btn_blue_matte);
+        tytul.setTextAppearance(this, R.style.naglowekTreningWeek);
+        tytul.setGravity(Gravity.CENTER_HORIZONTAL);
+        
+        ((LinearLayout) linearLayout).addView(tytul);
+        return linearLayout;
+	}
+    
+    private void generujDaty(){
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
+		Date date = new Date();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		for(int i=2;i<7;i++){
+			calendar.add(Calendar.DAY_OF_MONTH, +i);
+			daty.add(sdf.format(calendar.getTime()));
+			calendar.setTime(date);
+		}
     }
 }

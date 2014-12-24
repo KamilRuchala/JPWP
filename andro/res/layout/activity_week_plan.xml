@@ -13,6 +13,8 @@ android:background="@drawable/btn_orange_matte" >
             <ScrollView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:id="@+id/scroll1"
+		        android:background="@drawable/btn_orange_matte"
 		        android:layout_alignParentLeft="true" >
 		
 		        <LinearLayout
@@ -27,6 +29,8 @@ android:background="@drawable/btn_orange_matte" >
             <ScrollView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:id="@+id/scroll2"
+		        android:background="@drawable/btn_orange_matte"
 		        android:layout_alignParentLeft="true" >
 		
 		        <LinearLayout
@@ -41,6 +45,8 @@ android:background="@drawable/btn_orange_matte" >
             <ScrollView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:id="@+id/scroll3"
+		        android:background="@drawable/btn_orange_matte"
 		        android:layout_alignParentLeft="true" >
 		
 		        <LinearLayout
@@ -55,6 +61,8 @@ android:background="@drawable/btn_orange_matte" >
             <ScrollView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:id="@+id/scroll4"
+		        android:background="@drawable/btn_orange_matte"
 		        android:layout_alignParentLeft="true" >
 		
 		        <LinearLayout
@@ -69,6 +77,8 @@ android:background="@drawable/btn_orange_matte" >
             <ScrollView
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
+		        android:id="@+id/scroll5"
+		        android:background="@drawable/btn_orange_matte"
 		        android:layout_alignParentLeft="true" >
 		
 		        <LinearLayout

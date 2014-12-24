@@ -208,7 +208,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 			if ($dane != false && $dane['namba'] >= 1) {
 				$tmp=0;
 				$response["success"] = 1;
-				$stringjson=(string)json_encode($response) . "--";
+				$stringjson=(string)json_encode($response);
 				$previous_data="";
 				while($tmp < $dane['namba']){
 					$dane2 = $dane['wynik'][$tmp];
@@ -217,11 +217,11 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 					$response["powtorzenia"] = $dane2["powtorzenia"];
 					$jason=(string)json_encode($response);
 					if($dane2["dzien_leczenia"] != $previous_data){
-						$stringjson = $stringjson . $jason . "--";
+						$stringjson = $stringjson . "--" . $jason;
 						$previous_data = $dane2["dzien_leczenia"];
 					}
 					else{
-						$stringjson = $stringjson . $jason . "-";
+						$stringjson =  $stringjson . "-" . $jason;
 					}
 					$tmp = $tmp + 1;
 				}

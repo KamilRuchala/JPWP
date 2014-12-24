@@ -44,6 +44,7 @@ public class TreningActivity extends ActionBarActivity {
 	LinearLayout linearLayout;
 	
 	private boolean error = false;
+	private boolean freeTime = false;
 	private String error_key = null;
 	
 	private List<Integer> buttonsId = new ArrayList<Integer>();
@@ -57,7 +58,7 @@ public class TreningActivity extends ActionBarActivity {
 	    	int id1 = v.getId();
 	    	for(int a=0; a<links.size();a++){
 		    	if(id1 == buttonsId.get(a)){
-		    		String link = new String("http://m.youtube.com/"+(String)links.get(a));
+		    		String link = new String("https://m.youtube.com/"+(String)links.get(a));
 		    		Uri u = Uri.parse(link);
 		    		Intent i = new Intent(Intent.ACTION_VIEW,u);
 		    		startActivity(i);
@@ -98,6 +99,42 @@ public class TreningActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void rest(){
+		TextView przerwa = new TextView(this);
+        przerwa.setText("");
+        przerwa.setId(id);
+        id++;
+        przerwa.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ((LinearLayout) linearLayout).addView(przerwa);
+        
+        TextView przerwa2 = new TextView(this);
+        przerwa2.setText("");
+        przerwa2.setId(id);
+        id++;
+        przerwa2.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ((LinearLayout) linearLayout).addView(przerwa2);
+        
+        TextView przerwa3 = new TextView(this);
+        przerwa3.setText("");
+        przerwa3.setId(id);
+        id++;
+        przerwa3.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ((LinearLayout) linearLayout).addView(przerwa3);
+        
+        TextView tytul = new TextView(this);
+        tytul.setText("Dzien odpoczynku");
+        tytul.setId(id);
+        id++;
+        tytul.setBackgroundResource(R.drawable.btn_blue_matte);
+        tytul.setTextAppearance(this, R.style.naglowekTrening);
+        tytul.setGravity(Gravity.CENTER_HORIZONTAL);
+        
+        ((LinearLayout) linearLayout).addView(tytul);
 	}
 	
 	private void dodajCwiczenie(){
@@ -242,6 +279,10 @@ public class TreningActivity extends ActionBarActivity {
 						error_key = jObj.getString("error_msg");
 						return null;
 					}
+					else if("free".equals(jObj.getString("nazwa"))){
+						freeTime = true;
+						return null;
+					}
 					lista.add(new Cwiczenie(jObj.getString("nazwa"),jObj.getString("serie"),jObj.getString("powtorzenia"),jObj.getString("link")));
 				} catch (JSONException e) {
 					Log.e("JSON Parser", "Error parsing data " + e.toString());
@@ -252,8 +293,12 @@ public class TreningActivity extends ActionBarActivity {
 		
 		@Override
 		protected void onPostExecute(Void result){
-			if(error == false){
+			if(error == false && !freeTime){
 				dodajCwiczenie();
+				dialog.dismiss();
+			}
+			else if(freeTime){
+				rest();
 				dialog.dismiss();
 			}
 			else{
