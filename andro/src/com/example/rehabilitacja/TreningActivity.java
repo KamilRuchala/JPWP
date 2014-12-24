@@ -10,6 +10,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,8 +21,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -58,7 +60,7 @@ public class TreningActivity extends ActionBarActivity {
 	    	int id1 = v.getId();
 	    	for(int a=0; a<links.size();a++){
 		    	if(id1 == buttonsId.get(a)){
-		    		String link = new String("https://m.youtube.com/"+(String)links.get(a));
+		    		String link = new String("vnd.youtube:"+(String)links.get(a));
 		    		Uri u = Uri.parse(link);
 		    		Intent i = new Intent(Intent.ACTION_VIEW,u);
 		    		startActivity(i);
@@ -330,4 +332,18 @@ public class TreningActivity extends ActionBarActivity {
 			}
 		}
 	}
+	/*
+	private void startVideo(String videoID) {
+		 // default youtube app
+		 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoID));
+		 List<ResolveInfo> list = getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
+		 if (list.size() == 0) {
+		  // default youtube app not present or doesn't conform to the standard we know
+		  // use our own activity
+		  i = new Intent(getApplicationContext(), YouTube.class);
+		  i.putExtra("VIDEO_ID", videoID);
+		 }
+		 startActivity(i);
+		}
+		*/
 }
