@@ -1,0 +1,624 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_orange_matte"
+    android:orientation="vertical"
+   
+    tools:context="com.example.rehabilitacja.MessageBoxActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/messageBoxTitle"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_orange_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxTitles"
+            android:text="@string/temat" />
+
+        <TextView
+            android:id="@+id/messageBoxData"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_orange_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxTitles"
+            android:text="@string/data" />
+
+    </LinearLayout>
+    
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout1"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent1"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent1"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+    
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout2"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent2"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent2"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+     
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout3"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent3"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent3"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+      
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout4"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent4"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent4"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+       
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout5"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent5"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent5"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+        
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout6"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent6"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent6"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+         
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout7"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent7"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent7"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+          
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout8"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent8"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent8"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+           
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout9"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent9"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent9"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+            
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout10"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent10"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent10"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+             
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout11"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent11"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent11"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+              
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout12"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent12"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent12"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+               
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout13"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent13"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent13"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout14"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent14"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent14"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout15"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent15"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent15"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                  
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout16"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent16"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent16"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                   
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout17"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent17"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent17"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                    
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout18"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent18"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent18"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+                     
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout19"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent19"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent19"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+     
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="1dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout20"
+        android:background="#000000" >
+
+        <TextView
+            android:id="@+id/titleContent20"
+            android:layout_width="450dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/messageBoxContent"
+            android:text="@string/contentTitle" />
+
+        <TextView
+            android:id="@+id/dataContent20"
+            android:layout_width="147dp"
+            android:background="@drawable/btn_white_matte"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/messageBoxDateContent"
+            android:text="@string/contentData" />
+
+    </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/layout21" >
+        
+           <android.support.v7.widget.Space
+               android:id="@+id/space3"
+               android:layout_width="10dp"
+               android:layout_height="wrap_content" />
+
+           <Button
+               android:id="@+id/button1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:gravity="start"
+               android:background="@drawable/btn_blue_matte"
+               android:text="@string/str_back" />
+
+           <android.support.v7.widget.Space
+               android:id="@+id/space1"
+               android:layout_width="155dp"
+               android:layout_height="wrap_content" />
+
+
+           <Button
+               android:id="@+id/button2"
+               android:layout_width="80dp"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:background="@drawable/btn_green_matte"
+               android:text="@string/nowa" />
+           
+           <android.support.v7.widget.Space
+               android:id="@+id/space2"
+               android:layout_width="155dp"
+               android:layout_height="wrap_content" />
+
+           <Button
+               android:id="@+id/button3"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:gravity="end"
+               android:background="@drawable/btn_blue_matte"
+               android:text="@string/str_for" />
+
+       </LinearLayout>
+
+</LinearLayout>

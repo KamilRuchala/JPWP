@@ -28,8 +28,6 @@ public class MenuActivity extends ActionBarActivity {
     private static String KEY_SID = "sid";
     private String uid;
     private String sid;
-    private String dalej;
-    private String OPTION_TAG="todayPlan";
     final Context context = this;
     
 
@@ -61,6 +59,9 @@ public class MenuActivity extends ActionBarActivity {
 	            }
             	else if(getResources().getString(R.string.menu13).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                weekPlan();
+	            }
+            	else if(getResources().getString(R.string.menu31).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                messanger();
 	            }
             	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
             		logoutUser(v);
@@ -178,6 +179,17 @@ public class MenuActivity extends ActionBarActivity {
 		uid=sharedpreferences.getString(KEY_UID, "brak");
 		sid=sharedpreferences.getString(KEY_SID, "brak");
 		Intent i = new Intent(this,WeekPlanActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
+	}
+	
+	
+	private void messanger(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this,MessageBoxActivity.class);
 		i.putExtra(KEY_UID, uid);
 		i.putExtra(KEY_SID, sid);
  	   	startActivity(i);

@@ -40,6 +40,7 @@ public class UserFunctions {
     private static String dzienny_plan = "dzienny_plan";
     private static String tommorow_plan = "jutrzejszy_plan";
     private static String week_plan = "week_plan";
+    private static String message_box = "message_box";
     //private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -169,7 +170,7 @@ public class UserFunctions {
    	    params.add(new BasicNameValuePair("uid", uid));
    	    params.add(new BasicNameValuePair("sid", sid));
    	    return getServerResponse(params);
-       }
+    }
     
     public static String getWeekPlan(String uid, String sid){
       	 // Building Parameters
@@ -178,6 +179,16 @@ public class UserFunctions {
       	    params.add(new BasicNameValuePair("uid", uid));
       	    params.add(new BasicNameValuePair("sid", sid));
       	    return getServerResponse(params);
-          }
+    }
+    
+    public static String getMessageBox(String uid, String sid, String page_nr){
+     	 // Building Parameters
+     	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+     	    params.add(new BasicNameValuePair("tag", message_box));
+     	    params.add(new BasicNameValuePair("uid", uid));
+     	    params.add(new BasicNameValuePair("sid", sid));
+     	    params.add(new BasicNameValuePair("page_nr", page_nr));
+     	    return getServerResponse(params);
+   }
     
 }

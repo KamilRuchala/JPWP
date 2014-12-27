@@ -236,6 +236,37 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		}
 	}
 	
+	else if ($tag == 'message_box'){
+		$uid=$_POST['uid'];
+		$page_nr=$_POST['page_nr'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getMessageBox($uid, $page_nr);
+			if ($dane != false && $dane['namba'] >= 1) {
+				$tmp=0;
+				$response["success"] = 1;
+				$stringjson=(string)json_encode($response);
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response["tytul"] = $dane2["tytul"];
+					$response["data"] = $dane2["data"];
+					$jason=(string)json_encode($response);
+					$stringjson = $stringjson . "--" . $jason;
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
 	else if ($tag == 'wyloguj'){
 		session_destroy();
 	}

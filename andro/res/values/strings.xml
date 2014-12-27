@@ -39,5 +39,16 @@
     <string name="title_activity_trening">TreningActivity</string>
     <string name="title_activity_player">PlayerActivity</string>
     <string name="title_activity_week_plan">WeekPlanActivity</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="send_message">Wyslij</string>
+    <string name="title_activity_message_box">MessageBoxActivity</string>
+    <string name="temat">Temat</string>
+    <string name="data">Data</string>
+    <string name="contentTitle">Brak wiadomosci</string>
+    <string name="contentData">-</string>
+    <string name="str_back">Poprzednia</string>
+    <string name="str_for">Nastepna</string>
+    <string name="nowa">Nowa</string>
+    
 
 </resources>

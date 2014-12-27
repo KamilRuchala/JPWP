@@ -41,7 +41,18 @@
         </activity>
         <activity
             android:name=".WeekPlanActivity"
-            android:label="@string/title_activity_week_plan" >
+            android:label="@string/title_activity_week_plan"
+            android:screenOrientation="portrait" > >
+        </activity>
+        <activity
+            android:name=".MessageActivity"
+            android:label="@string/title_activity_message"
+            android:screenOrientation="portrait" > >
+        </activity>
+        <activity
+            android:name=".MessageBoxActivity"
+            android:label="@string/title_activity_message_box"
+            android:screenOrientation="portrait" > >
         </activity>
     </application>
 
