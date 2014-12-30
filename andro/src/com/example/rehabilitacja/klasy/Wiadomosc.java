@@ -13,6 +13,7 @@ public class Wiadomosc {
 	private String data;
 	private String title;
 	private String tag;
+	private String tresc;
 	
 	public Wiadomosc(String data1, String title) {
 		super();
@@ -42,9 +43,10 @@ public class Wiadomosc {
 		this.data = data1;
 		this.title = title;
 		this.tag = "";
+		this.tresc = "";
 	}
 	
-	public Wiadomosc(String data1, String title, String tag) {
+	public Wiadomosc(String data1, String title, String tag, String tresc) {
 		super();
 		DateFormat df = new SimpleDateFormat("yyyy-M-dd hh:mm");
 		Date data = null;
@@ -72,6 +74,7 @@ public class Wiadomosc {
 		this.data = data1;
 		this.title = title;
 		this.tag = tag;
+		this.tresc = tresc;
 	}
 
 	public String getData() {
@@ -86,4 +89,7 @@ public class Wiadomosc {
 		return tag;
 	}
 	
+	public String getTresc() {
+		return tresc;
+	}
 }

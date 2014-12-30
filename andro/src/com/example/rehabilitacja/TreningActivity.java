@@ -195,8 +195,6 @@ public class TreningActivity extends ActionBarActivity {
 		        ((LinearLayout) linearLayout).addView(d);
 	        }
 	        
-	        //d.setGravity(Gravity.RIGHT); dla przycisku
-	        
 	        
 	        RelativeLayout.LayoutParams buttonParams = 
 	                new RelativeLayout.LayoutParams(
@@ -332,18 +330,4 @@ public class TreningActivity extends ActionBarActivity {
 			}
 		}
 	}
-	/*
-	private void startVideo(String videoID) {
-		 // default youtube app
-		 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoID));
-		 List<ResolveInfo> list = getPackageManager().queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
-		 if (list.size() == 0) {
-		  // default youtube app not present or doesn't conform to the standard we know
-		  // use our own activity
-		  i = new Intent(getApplicationContext(), YouTube.class);
-		  i.putExtra("VIDEO_ID", videoID);
-		 }
-		 startActivity(i);
-		}
-		*/
 }

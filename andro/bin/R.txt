@@ -272,6 +272,8 @@ int drawable info 0x7f020064
 int drawable kalendarz 0x7f020065
 int drawable klucz_1 0x7f020066
 int drawable send 0x7f020067
+int drawable speech_bubble_green 0x7f020068
+int drawable speech_bubble_orange 0x7f020069
 int id LinearLayout1 0x7f050057
 int id action_bar 0x7f05002d
 int id action_bar_activity_content 0x7f050026
@@ -711,6 +713,8 @@ int style Widget_AppCompat_Spinner_DropDown_ActionBar 0x7f0b0022
 int style messageBoxContent 0x7f0b0098
 int style messageBoxDateContent 0x7f0b0099
 int style messageBoxTitles 0x7f0b0097
+int style message_data_style 0x7f0b009a
+int style message_style 0x7f0b009b
 int style naglowekMenuText 0x7f0b0091
 int style naglowekTrening 0x7f0b0092
 int style naglowekTreningWeek 0x7f0b0093

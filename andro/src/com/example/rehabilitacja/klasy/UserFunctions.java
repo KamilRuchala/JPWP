@@ -41,6 +41,8 @@ public class UserFunctions {
     private static String tommorow_plan = "jutrzejszy_plan";
     private static String week_plan = "week_plan";
     private static String message_box = "message_box";
+    private static String messages = "messages_by_title";
+    private static String store_message = "store_message";
     //private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -190,5 +192,28 @@ public class UserFunctions {
      	    params.add(new BasicNameValuePair("page_nr", page_nr));
      	    return getServerResponse(params);
    }
+    
+   public static String getMessageByTitle(String uid, String sid, String title){
+    	 // Building Parameters
+    	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	    params.add(new BasicNameValuePair("tag", messages));
+    	    params.add(new BasicNameValuePair("uid", uid));
+    	    params.add(new BasicNameValuePair("sid", sid));
+    	    params.add(new BasicNameValuePair("title", title));
+    	    return getServerResponse(params);
+  }
+   
+   public static String storeMessage(String uid, String sid, String title, String tresc, String data){
+  	 // Building Parameters
+  	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+  	    params.add(new BasicNameValuePair("tag", store_message));
+  	    params.add(new BasicNameValuePair("uid", uid));
+  	    params.add(new BasicNameValuePair("sid", sid));
+  	    params.add(new BasicNameValuePair("title", title));
+  	    params.add(new BasicNameValuePair("tresc", tresc));
+  	    params.add(new BasicNameValuePair("data", data));
+  	    params.add(new BasicNameValuePair("user_tag", "0"));
+  	    return getServerResponse(params);
+}
     
 }
