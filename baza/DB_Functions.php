@@ -208,15 +208,52 @@ class DB_Functions {
 		$rows = array();
 		//$limit2 = $page * 20;
 		//$limit1 = $limit2 - 20; 
-		$result = mysql_query("SELECT w.tresc, w.data, w.tag as data FROM wiadomosci w WHERE 
+		$result = mysql_query("SELECT w.tresc, w.data as data, w.tag FROM wiadomosci w WHERE 
 		w.tytul = '$title' AND (w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id 
-		AND l.unique_id='$uid')) ORDER BY data DESC LIMIT 0, 20");
+		AND l.unique_id='$uid')) ORDER BY data");
 		$no_of_rows = mysql_num_rows($result);
         if ($no_of_rows >= 1) {
             while($row = mysql_fetch_array($result)) {
 				array_push($rows,$row);
 			}
 			return array('namba' => $no_of_rows, 'wynik' => $rows);
+        } 
+		else {
+            return false;
+        }
+	}
+	
+	public function storeMessage($uid, $title, $tresc, $data, $user_tag){
+		$result = mysql_query("SELECT pp.lid, pp.pid FROM pacjenci pp WHERE 
+		(pp.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id 
+		AND l.unique_id='$uid'))");
+		$no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows >= 1) {
+            $result = mysql_fetch_array($result);
+			$lid = $result["lid"];
+			$pid = $result["pid"];
+			$result = mysql_query("INSERT INTO wiadomosci(lid, pid, tytul, tresc, data, tag) 
+			VALUES('$lid', '$pid', '$title', '$tresc', '$data', '$user_tag')");
+			// check for successful store
+			if ($result) { 
+				return true;
+			} else {
+				return false;
+			}
+        } 
+		else {
+            return false;
+        }
+	}
+	
+	public function getPhone($uid){
+		$result = mysql_query("SELECT l.telefon FROM lekarze l, pacjenci p WHERE p.lid = l.lid AND
+		(p.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id 
+		AND l.unique_id='$uid'))");
+		$no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows >= 1) {
+            $result = mysql_fetch_array($result);
+            return $result;
         } 
 		else {
             return false;

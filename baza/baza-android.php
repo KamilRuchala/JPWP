@@ -250,13 +250,90 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 				$stringjson=(string)json_encode($response);
 				while($tmp < $dane['namba']){
 					$dane2 = $dane['wynik'][$tmp];
-					$response["tytul"] = $dane2["tytul"];
-					$response["data"] = $dane2["data"];
-					$jason=(string)json_encode($response);
+					$response1["tytul"] = $dane2["tytul"];
+					$response1["data"] = $dane2["data"];
+					$jason=(string)json_encode($response1);
 					$stringjson = $stringjson . "--" . $jason;
 					$tmp = $tmp + 1;
 				}
 				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
+	else if ($tag == 'messages_by_title'){
+		$uid = $_POST['uid'];
+		$title = $_POST['title'];
+		$sid = $_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getMessagesByTitle($uid, $title);
+			if ($dane != false && $dane['namba'] >= 1) {
+				$tmp=0;
+				$response["success"] = 1;
+				$stringjson=(string)json_encode($response);
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response1["tresc"] = $dane2["tresc"];
+					$response1["data"] = $dane2["data"];
+					$response1["tag"] = $dane2["tag"];
+					$jason=(string)json_encode($response1);
+					$stringjson = $stringjson . "--" . $jason;
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
+	else if ($tag == 'store_message'){
+		$uid = $_POST['uid'];
+		$sid = $_POST['sid'];
+		$title = $_POST['title'];
+		$tresc = $_POST['tresc'];
+		$data = $_POST['data'];
+		$user_tag = $_POST['user_tag'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->storeMessage($uid, $title, $tresc, $data, $user_tag);
+			if ($dane != false) {
+				$response["success"] = 1;
+				echo json_encode($response);
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
+	else if ($tag == 'doctor_number'){
+		$uid = $_POST['uid'];
+		$sid = $_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getPhone($uid);
+			if ($dane != false) {
+				$response["success"] = 1;
+				$response["number"] = $data["telefon"];
+				echo json_encode($response);
 			}
 			else{
 				$response["success"] = 0;

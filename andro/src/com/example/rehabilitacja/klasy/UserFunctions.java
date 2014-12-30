@@ -30,7 +30,7 @@ public class UserFunctions {
      
     // Testing in localhost using wamp or xampp 
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
-    private static String URL = "http://192.168.1.15/test/index2.php";
+    private static String URL = "http://192.168.1.27/test/index2.php";
     
     static InputStream is = null;
     static JSONObject jObj = null;
@@ -43,6 +43,7 @@ public class UserFunctions {
     private static String message_box = "message_box";
     private static String messages = "messages_by_title";
     private static String store_message = "store_message";
+    private static String doctor_number = "doctor_number";
     //private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -214,6 +215,15 @@ public class UserFunctions {
   	    params.add(new BasicNameValuePair("data", data));
   	    params.add(new BasicNameValuePair("user_tag", "0"));
   	    return getServerResponse(params);
-}
+   }
+   
+   public static String getPhoneNumber(String uid, String sid){
+	  	 // Building Parameters
+	  	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+	  	    params.add(new BasicNameValuePair("tag", doctor_number));
+	  	    params.add(new BasicNameValuePair("uid", uid));
+	  	    params.add(new BasicNameValuePair("sid", sid));
+	  	    return getServerResponse(params);
+	}
     
 }

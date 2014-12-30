@@ -9,7 +9,7 @@
     <string name="logbutton">Zaloguj</string>
     <string name="zamknijButton">Zamknij</string>
     <string name="title_activity_login_dialog">LoginDialog</string>
-    <string name="pleaseWait">Prosze czekaj. Trwa logowanie...</string>
+    <string name="pleaseWait">Prosze czekaj. Trwa logowanie..</string>
     <string name="pleaseWaitFalse">Blad autoryzacji</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="menu1">Program treningowy</string>
@@ -22,9 +22,8 @@
     <string name="menu11">Plan na dzis</string>
     <string name="menu12">Plan na jutro</string>
     <string name="menu13">Plan tygodniowy</string>
-    <string name="menu21">Wyswietl kalendarz</string>
-    <string name="menu23">Zaplanuj wizyte u lekarza</string>
-    <string name="menu22">Wyswietl zaplanowane wizyty</string>
+    <string name="menu21">Wyswietl zaplanowane wizyty</string>
+    <string name="menu22">Zaplanuj wizyte u lekarza</string>
     <string name="menu31">Przejdz do wiadomosci</string>
     <string name="menu32">Telefon do lekarza</string>
     <string name="menu33">SMS do lekarza</string>
@@ -51,6 +50,11 @@
     <string name="nowa">Nowa</string>
     <string name="new_title">Podaj tytul nowych wiadomosci</string>
     <string name="ok">OK</string>
-    
+    <string name="title_activity_sms">SmsActivity</string>
+    <string name="warningSMS">Uwaga! Urzadzenie musi posiadac karte SIM!\n</string>
+    <string name="hintSMS">Wpisz wiadomosc..</string>
+    <string name="sendSMS">Wyslij</string>
+    <string name="number_of_mess">Liczba wiadomosci: </string>
+    <string name="title_activity_calendar">CalendarActivity</string>
 
 </resources>

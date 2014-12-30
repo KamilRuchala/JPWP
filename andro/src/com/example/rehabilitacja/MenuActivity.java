@@ -61,7 +61,10 @@ public class MenuActivity extends ActionBarActivity {
 	                weekPlan();
 	            }
             	else if(getResources().getString(R.string.menu31).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
-	                messanger();
+	                messenger();
+	            }
+            	else if(getResources().getString(R.string.menu33).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                sms();
 	            }
             	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
             		logoutUser(v);
@@ -118,7 +121,6 @@ public class MenuActivity extends ActionBarActivity {
         List<String> menu2 = new ArrayList<String>();
         menu2.add(getString(R.string.menu21));
         menu2.add(getString(R.string.menu22));
-        menu2.add(getString(R.string.menu23));
         
         List<String> menu3 = new ArrayList<String>();
         menu3.add(getString(R.string.menu31));
@@ -185,11 +187,21 @@ public class MenuActivity extends ActionBarActivity {
 	}
 	
 	
-	private void messanger(){
+	private void messenger(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
 		sid=sharedpreferences.getString(KEY_SID, "brak");
 		Intent i = new Intent(this,MessageBoxActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
+	}
+	
+	private void sms(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this,SmsActivity.class);
 		i.putExtra(KEY_UID, uid);
 		i.putExtra(KEY_SID, sid);
  	   	startActivity(i);
