@@ -49,6 +49,8 @@
     <string name="str_back">Poprzednia</string>
     <string name="str_for">Nastepna</string>
     <string name="nowa">Nowa</string>
+    <string name="new_title">Podaj tytul nowych wiadomosci</string>
+    <string name="ok">OK</string>
     
 
 </resources>

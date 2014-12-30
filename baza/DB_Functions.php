@@ -191,7 +191,26 @@ class DB_Functions {
 		$limit1 = $limit2 - 20; 
 		$result = mysql_query("SELECT w.tytul, max(w.data) as data FROM wiadomosci w WHERE 
 		(w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id AND 
-		l.unique_id='$uid')) group by w.tytul ORDER BY data LIMIT $limit1, $limit2");
+		l.unique_id='$uid')) group by w.tytul ORDER BY data DESC LIMIT $limit1, $limit2");
+		$no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows >= 1) {
+            while($row = mysql_fetch_array($result)) {
+				array_push($rows,$row);
+			}
+			return array('namba' => $no_of_rows, 'wynik' => $rows);
+        } 
+		else {
+            return false;
+        }
+	}
+	
+	public function getMessagesByTitle($uid, $title){
+		$rows = array();
+		//$limit2 = $page * 20;
+		//$limit1 = $limit2 - 20; 
+		$result = mysql_query("SELECT w.tresc, w.data, w.tag as data FROM wiadomosci w WHERE 
+		w.tytul = '$title' AND (w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id 
+		AND l.unique_id='$uid')) ORDER BY data DESC LIMIT 0, 20");
 		$no_of_rows = mysql_num_rows($result);
         if ($no_of_rows >= 1) {
             while($row = mysql_fetch_array($result)) {

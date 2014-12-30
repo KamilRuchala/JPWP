@@ -17,13 +17,16 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rehabilitacja.klasy.UserFunctions;
 import com.example.rehabilitacja.klasy.Wiadomosc;
@@ -33,6 +36,8 @@ public class MessageBoxActivity extends ActionBarActivity {
 	private String error_msg = null;
 	private boolean error = false;
 	private Context context = this;
+	private static String KEY_UID = "uid";
+    private static String KEY_SID = "sid";
 	
 	private String uid, sid;
 	private static JSONObject jObj = null;
@@ -41,11 +46,64 @@ public class MessageBoxActivity extends ActionBarActivity {
 	private List<Wiadomosc> messages_list = new ArrayList<Wiadomosc>();
 	private LinearLayout[] tablicaLayout = new LinearLayout[21];
 	
+	private Button new_message, prev_button, next_button;
+	private EditText editTitle;
+	private String title = "";
+	private Dialog new_dialog;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_box);
+		new_message = (Button) findViewById(R.id.button2);
+		prev_button = (Button) findViewById(R.id.button1);
+		next_button = (Button) findViewById(R.id.button3);
+		
+		prev_button.setOnClickListener(new View.OnClickListener(){
+			@Override
+            public void onClick(View v) {
+				int foo = Integer.parseInt(page);
+				foo--;
+				page = Integer.toString(foo);
+				new nowyWatek().execute();
+			}
+		});
+		
+		next_button.setOnClickListener(new View.OnClickListener(){
+			@Override
+            public void onClick(View v) {
+				int foo = Integer.parseInt(page);
+				foo++;
+				page = Integer.toString(foo);
+				new nowyWatek().execute();
+			}
+		});
+		
+		new_message.setOnClickListener(new View.OnClickListener(){
+        	@Override
+            public void onClick(View v) {
+        		new_dialog = new Dialog(context);
+        		new_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        		new_dialog.setContentView(R.layout.new_message_dialog);
+        		editTitle = (EditText) new_dialog.findViewById(R.id.editTitle);
+        		Button ok = (Button) new_dialog.findViewById(R.id.okButton);
+    	    	new_dialog.show();
+    	    	ok.setOnClickListener(new View.OnClickListener(){
+    	        	@Override
+    	            public void onClick(View v) {
+    	        		title = editTitle.getText().toString();
+    	        		if(title.matches("\\w+")){
+    	        			new_dialog.dismiss();
+    	        			forward(title);
+    	        		}
+    	        		else{
+    	        			Toast.makeText(getApplicationContext(), "Podaj tytul!", Toast.LENGTH_LONG).show();
+    	        		}
+    	        	}
+    	    	});
+            }
+        });
 		page = "0";
 		Bundle bb = getIntent().getExtras();
 		uid=bb.getString("uid");
@@ -176,6 +234,7 @@ public class MessageBoxActivity extends ActionBarActivity {
 			data = (TextView) findViewById(tmp+2);
 			title.setText(aaa.getTitle());
 			data.setText(aaa.getData());
+			title.setOnClickListener(clicks);
 		} 
 		tablicaLayout[20].setVisibility(LinearLayout.VISIBLE);
 		
@@ -190,4 +249,23 @@ public class MessageBoxActivity extends ActionBarActivity {
 		}
 		
 	}
+	
+	private void forward(String tytul){
+		Intent i = new Intent(this,MessageActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+		i.putExtra("title", tytul);
+ 	   	startActivity(i);
+	}
+	
+	OnClickListener clicks=new OnClickListener() {
+		
+	    @Override
+	    public void onClick(View v) {
+	    	int id1 = v.getId();
+	    	TextView tmp = (TextView) findViewById(id1);
+	    	String title = (tmp.getText()).toString();
+	    	forward(title);
+	    }
+	};
 }
