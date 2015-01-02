@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/btn_green_matte"
+    android:padding="5dp">
+     
+    <TextView
+        android:text=""
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        style="@style/planTreninguMedium"
+        android:ellipsize="marquee"></TextView>
+     
+     
+</RelativeLayout>

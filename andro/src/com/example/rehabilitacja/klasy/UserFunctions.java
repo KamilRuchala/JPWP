@@ -40,6 +40,7 @@ public class UserFunctions {
     private static String dzienny_plan = "dzienny_plan";
     private static String tommorow_plan = "jutrzejszy_plan";
     private static String week_plan = "week_plan";
+    private static String visit_plan = "visit_plan";
     private static String message_box = "message_box";
     private static String messages = "messages_by_title";
     private static String store_message = "store_message";
@@ -183,6 +184,15 @@ public class UserFunctions {
       	    params.add(new BasicNameValuePair("sid", sid));
       	    return getServerResponse(params);
     }
+    
+    public static String getVisitPlan(String uid, String sid){
+     	 // Building Parameters
+     	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+     	    params.add(new BasicNameValuePair("tag", visit_plan));
+     	    params.add(new BasicNameValuePair("uid", uid));
+     	    params.add(new BasicNameValuePair("sid", sid));
+     	    return getServerResponse(params);
+   }
     
     public static String getMessageBox(String uid, String sid, String page_nr){
      	 // Building Parameters

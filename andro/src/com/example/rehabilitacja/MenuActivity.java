@@ -60,6 +60,9 @@ public class MenuActivity extends ActionBarActivity {
             	else if(getResources().getString(R.string.menu13).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                weekPlan();
 	            }
+            	else if(getResources().getString(R.string.menu21).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                showCalendar();
+	            }
             	else if(getResources().getString(R.string.menu31).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                messenger();
 	            }
@@ -186,6 +189,15 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	private void showCalendar(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this,CalendarActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
+	}
 	
 	private void messenger(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -206,6 +218,8 @@ public class MenuActivity extends ActionBarActivity {
 		i.putExtra(KEY_SID, sid);
  	   	startActivity(i);
 	}
+	
+	
 	
 	 /**
      * Function to logout user
