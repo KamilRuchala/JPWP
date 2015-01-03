@@ -16,12 +16,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.rehabilitacja.klasy.UserFunctions;
@@ -34,10 +32,8 @@ public class LogActivity extends ActionBarActivity {
 	final Context context = this;
 	
 	private static String KEY_SUCCESS = "success";
-    private static String KEY_ERROR = "error";
     private static String KEY_ERROR_MSG = "error_msg";
     private static String KEY_UID = "uid";
-    private static String KEY_ID = "id";
     private static String KEY_SID = "sid";
     
     public static String uid = null;
@@ -109,15 +105,6 @@ public class LogActivity extends ActionBarActivity {
 				ProgressBar pasek=(ProgressBar) dialog.findViewById(R.id.progressBar1);
 				TextView tekst = (TextView) dialog.findViewById(R.id.pleaseWait);
 				pasek.setVisibility(View.INVISIBLE);
-				
-				
-				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-				
-				//p.addRule(RelativeLayout.BELOW, R.id.image);
-				//p.addRule(RelativeLayout.CENTER_IN_PARENT);
-				
-				//tekst.setLayoutParams(p);
 				
 				tekst.setText(result);
 				tekst.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);

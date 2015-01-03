@@ -236,6 +236,36 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		}
 	}
 	
+	else if ($tag == 'visit_plan'){
+		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getVisitPlan($uid);
+			if ($dane != false && $dane['namba'] >= 1) {
+				$tmp=0;
+				$response["success"] = 1;
+				$stringjson=(string)json_encode($response);
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response1["data"] = $dane2["data"];
+					$response1["uwagi"] = $dane2["uwagi"];
+					$jason=(string)json_encode($response1);
+					$stringjson = $stringjson . "--" . $jason;
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Blad! Dane niedostepne";
+				echo json_encode($response);
+			}
+		}
+	}
+	
 	else if ($tag == 'message_box'){
 		$uid=$_POST['uid'];
 		$page_nr=$_POST['page_nr'];
@@ -348,13 +378,49 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		session_destroy();
 	}
 	
+	if ($tag == "loginD") { //login wporzo
+        // Request type is check Login
+		session_start();
+        $id = $_POST['id'];
+        $password = $_POST['pass'];
+		$ident = $_POST['ident'];
+ 
+        // check for user
+        $user = $db->dLogin($id, $password, $ident);
+        if ($user != false) {
+            $response["success"] = 1;
+			$response["sid"] = session_id();
+			$response["imie"] = $user["imie"];
+			$response["nazwisko"] = $user["nazwisko"];
+			$response["nazwisko"] = $user["nazwisko"];
+			$response["email"] = $user["email"];
+            
+			if (!isset($_SESSION['zalogowany'])) //k
+			{ //k
+				$_SESSION['zalogowany'] = $user["unique_id"];//k
+				$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];//k
+			} //k
+            echo json_encode($response);
+        } else {
+            $response["error"] = 1;
+            $response["error_msg"] = "Incorrect email or password!";
+            echo json_encode($response);
+        }
+    }
+	
 	////////
 	else {
-        echo "Invalid Request";
+        $response["success"] = 0;
+		$response["error"] = 1;
+		$response["error_msg"] = "Blad! Dane niedostepne";
+		echo json_encode($response);
     }
 	
 	
 } else {
-    echo "Access Denied";
+    $response["success"] = 0;
+	$response["error"] = 1;
+	$response["error_msg"] = "Zostales wylogowany. Zaloguj sie ponownie";
+	echo json_encode($response);
 }
 ?>

@@ -17,7 +17,7 @@ public class Wiadomosc {
 	
 	public Wiadomosc(String data1, String title) {
 		super();
-		DateFormat df = new SimpleDateFormat("yyyy-M-dd hh:mm");
+		DateFormat df = new SimpleDateFormat("yyyy-M-dd HH:mm");
 		Date data = null;
 		try {
 			data = df.parse(data1);
@@ -34,7 +34,7 @@ public class Wiadomosc {
 		Calendar newCalendar = Calendar.getInstance();
 		newCalendar.setTime(data);
 		int year = newCalendar.get(Calendar.YEAR);
-		DateFormat df1 = new SimpleDateFormat("M-dd hh:mm");
+		DateFormat df1 = new SimpleDateFormat("M-dd HH:mm ");
 		
 		if(year == act_year){
 			data1 = df1.format(newCalendar.getTime());
@@ -48,7 +48,7 @@ public class Wiadomosc {
 	
 	public Wiadomosc(String data1, String title, String tag, String tresc) {
 		super();
-		DateFormat df = new SimpleDateFormat("yyyy-M-dd hh:mm");
+		DateFormat df = new SimpleDateFormat("yyyy-M-dd HH:mm");
 		Date data = null;
 		try {
 			data = df.parse(data1);
@@ -65,7 +65,7 @@ public class Wiadomosc {
 		Calendar newCalendar = Calendar.getInstance();
 		newCalendar.setTime(data);
 		int year = newCalendar.get(Calendar.YEAR);
-		DateFormat df1 = new SimpleDateFormat("M-dd hh:mm");
+		DateFormat df1 = new SimpleDateFormat("M-dd HH:mm");
 		
 		if(year == act_year){
 			data1 = df1.format(newCalendar.getTime());

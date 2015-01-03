@@ -49,6 +49,7 @@
         <activity
             android:name=".MessageActivity"
             android:label="@string/title_activity_message"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" >
  >
         </activity>

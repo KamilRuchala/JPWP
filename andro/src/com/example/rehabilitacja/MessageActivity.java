@@ -27,9 +27,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rehabilitacja.klasy.UserFunctions;
 import com.example.rehabilitacja.klasy.Wiadomosc;
@@ -52,6 +53,7 @@ public class MessageActivity extends ActionBarActivity {
 	private List<Wiadomosc> messages_list = new ArrayList<Wiadomosc>();
 	private EditText message_to_send;
 	private Button send;
+	private ScrollView scroll;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,9 @@ public class MessageActivity extends ActionBarActivity {
 		title = bb.getString(KEY_TITLE);
 		
 		layout = (LinearLayout) findViewById(R.id.linlay);
+		scroll = (ScrollView) findViewById(R.id.scrollView1);
 		new nowyWatek().execute();
+		
 		message_to_send = (EditText) findViewById(R.id.editText1);
 		send = (Button) findViewById(R.id.button1);
 		send.setOnClickListener(new View.OnClickListener(){
@@ -75,10 +79,11 @@ public class MessageActivity extends ActionBarActivity {
         			sendMessage(text);
         		}
         		else{
-        			Toast.makeText(getApplicationContext(), "Podaj tytul!", Toast.LENGTH_LONG).show();
+        			Toast.makeText(getApplicationContext(), "Napisz cos!", Toast.LENGTH_LONG).show();
         		}
             }
         });
+		
 	}
 
 	@Override
@@ -211,14 +216,23 @@ public class MessageActivity extends ActionBarActivity {
 	        rl.addView(wiadomosc, lp);
 	        ((LinearLayout) layout).addView(rl);
 		}
+		scroll.post(new Runnable() {            
+		    @Override
+		    public void run() {
+		           scroll.fullScroll(View.FOCUS_DOWN);              
+		    }
+		});
+		
 	}
 	
 	private void sendMessage(String tresc){
 		// trzeba dodac do bazy w nowym watku
 		String data1 = getDate();
 		new nowyWatek2().execute(tresc, data1);
+		Log.e("data",data1);
 		if(!error){
 			data1 = getDateWithoutSec();
+			Log.e("data",data1);
 			TextView data = new TextView(this);
 			data.setText(data1);
 	        data.setId(id);

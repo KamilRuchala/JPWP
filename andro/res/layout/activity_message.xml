@@ -35,8 +35,6 @@
             android:background="#FFFFFF"
             android:ems="10"
             android:inputType="textMultiLine" >
-
-            <requestFocus />
         </EditText>
 
         <Button

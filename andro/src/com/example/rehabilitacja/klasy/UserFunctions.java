@@ -30,7 +30,7 @@ public class UserFunctions {
      
     // Testing in localhost using wamp or xampp 
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
-    private static String URL = "http://192.168.1.27/test/index2.php";
+    private static String URL = "http://kruchala.zz.mu/baza-android.php";
     
     static InputStream is = null;
     static JSONObject jObj = null;
@@ -56,9 +56,9 @@ public class UserFunctions {
     	// Making HTTP request
         try {
         	HttpParams httpParameters = new BasicHttpParams();
-        	int timeoutConnection = 5000;
+        	int timeoutConnection = 10000;
         	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-        	int timeoutSocket = 5000;
+        	int timeoutSocket = 10000;
         	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         	
             // defaultHttpClient

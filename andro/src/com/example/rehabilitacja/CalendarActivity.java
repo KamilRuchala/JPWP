@@ -1,9 +1,7 @@
 package com.example.rehabilitacja;
 //http://pastebin.com/yNqtKAKR
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -70,6 +67,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 	private static JSONObject jObj = null;
 	private List<Wizyta> visitsList = new ArrayList<Wizyta>();
 	private List<Wizyta> visitDaysInMonth;
+	private Dialog new_dialog;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -82,43 +80,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 		sid = bb.getString(KEY_SID);
 	
 		new nowyWatek().execute();
-		prepareList();
-		_calendar = Calendar.getInstance(Locale.getDefault());
-		month = _calendar.get(Calendar.MONTH) + 1;
-		year = _calendar.get(Calendar.YEAR);
-		Log.d(tag, "Calendar Instance:= " + "Month: " + month + " " + "Year: "
-				+ year);
-
-		selectedDayMonthYearButton = (Button) this
-				.findViewById(R.id.selectedDayMonthYear);
-		selectedDayMonthYearButton.setText("Selected: ");
-
-		prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
-		prevMonth.setOnClickListener(this);
-
-		currentMonth = (TextView) this.findViewById(R.id.currentMonth);
-		currentMonth.setText(DateFormat.format(dateTemplate,
-				_calendar.getTime()));
-
-		nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
-		nextMonth.setOnClickListener(this);
-
-		calendarView = (GridView) this.findViewById(R.id.calendar);
 		
-		 
-        // prepared arraylist and passed it to the Adapter class
-        mAdapter = new GridviewAdapter(this,listDays);
- 
-        // Set custom adapter to gridview
-        gridView = (GridView) findViewById(R.id.gridView1);
-        gridView.setAdapter(mAdapter);
- 
-
-		// Initialised
-		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year);
-		adapter.notifyDataSetChanged();
-		calendarView.setAdapter(adapter);
 	}
 
 	/**
@@ -171,7 +133,6 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 
 	// Inner Class
 	public class GridCellAdapter extends BaseAdapter implements OnClickListener {
-		private static final String tag = "GridCellAdapter";
 		private final Context _context;
 
 		private final List<String> list;
@@ -189,8 +150,6 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 		private Button gridcell;
 		private TextView num_events_per_day;
 		private final HashMap<String, Integer> eventsPerMonthMap;
-		private final SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				"dd-MM-yyyy");
 
 		// Days in Current Month
 		public GridCellAdapter(Context context, int textViewResourceId,
@@ -198,8 +157,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 			super();
 			this._context = context;
 			this.list = new ArrayList<String>();
-			Log.d(tag, "==> Passed in Date FOR Month: " + month + " "
-					+ "Year: " + year);
+	
 			Calendar calendar = Calendar.getInstance();
 			setCurrentDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
 			setCurrentWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
@@ -426,15 +384,32 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 		@Override
 		public void onClick(View view) {
 			String date_month_year = (String) view.getTag();
-			selectedDayMonthYearButton.setText("Selected: " + date_month_year);
+			String[] tablica = date_month_year.split("-");
+			int miesiac = 0;
+			String data = tablica[0] + "-";
+            for(int i=0;i<months.length;i++){
+            	if(months[i].equals(tablica[1])){
+            		miesiac = i+1;
+            		data = data + Integer.toString(i+1) + "-";
+            		break;
+            	}
+            }
+            
+            data = data + tablica[2];
+            if(visitDaysInMonth.get(0).getMonth() == miesiac){
+            	for(int j=0;j<visitDaysInMonth.size();j++){
+            		if(Integer.parseInt(tablica[0]) == visitDaysInMonth.get(j).getDay()){
+            			String hour = Integer.toString(visitDaysInMonth.get(j).getGodz());
+            			if(hour.length()<2) hour = "0" + hour;
+            			String minutes = Integer.toString(visitDaysInMonth.get(j).getMin());
+            			if(minutes.length()<2) minutes = "0" + minutes;
+            			newDialog(data, hour +":"+minutes, visitDaysInMonth.get(j).getInfo());
+            			break;
+            		}
+            	}
+            }
+			selectedDayMonthYearButton.setText("Wybrano Date: " + data);
 			Log.e("Selected date", date_month_year);
-			try {
-				Date parsedDate = dateFormatter.parse(date_month_year);
-				Log.d(tag, "Parsed Date: " + parsedDate.toString());
-
-			} catch (ParseException e) {
-			} catch (java.text.ParseException e) {
-			}
 		}
 
 		public int getCurrentDayOfMonth() {
@@ -518,7 +493,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 		@Override
 		protected void onPostExecute(Void result){
 			if(!error){
-				
+				prepareCalendar();
 				dialog.dismiss();
 			}
 			else{
@@ -547,5 +522,61 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 				});
 			}
 		}
+	}
+	
+	private void prepareCalendar(){
+		prepareList();
+		_calendar = Calendar.getInstance(Locale.getDefault());
+		month = _calendar.get(Calendar.MONTH) + 1;
+		year = _calendar.get(Calendar.YEAR);
+
+		selectedDayMonthYearButton = (Button) this
+				.findViewById(R.id.selectedDayMonthYear);
+		selectedDayMonthYearButton.setText("Wybrano Date: ");
+
+		prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
+		prevMonth.setOnClickListener(this);
+
+		currentMonth = (TextView) this.findViewById(R.id.currentMonth);
+		currentMonth.setText(DateFormat.format(dateTemplate,
+				_calendar.getTime()));
+
+		nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
+		nextMonth.setOnClickListener(this);
+
+		calendarView = (GridView) this.findViewById(R.id.calendar);
+		
+		 
+        // prepared arraylist and passed it to the Adapter class
+        mAdapter = new GridviewAdapter(this,listDays);
+ 
+        // Set custom adapter to gridview
+        gridView = (GridView) findViewById(R.id.gridView1);
+        gridView.setAdapter(mAdapter);
+ 
+
+		// Initialised
+		adapter = new GridCellAdapter(getApplicationContext(),
+				R.id.calendar_day_gridcell, month, year);
+		adapter.notifyDataSetChanged();
+		calendarView.setAdapter(adapter);
+	}
+	
+	private void newDialog(String data, String godzina1, String opis){
+		new_dialog = new Dialog(context);
+		new_dialog.setTitle(data);
+		new_dialog.setContentView(R.layout.calendar_event);
+		TextView godzina = (TextView) new_dialog.findViewById(R.id.godzina);
+		godzina.setText(godzina1);
+		TextView desc = (TextView) new_dialog.findViewById(R.id.opis);
+		desc.setText(opis);
+		Button ok = (Button) new_dialog.findViewById(R.id.close);
+    	new_dialog.show();
+    	ok.setOnClickListener(new View.OnClickListener(){
+        	@Override
+            public void onClick(View v) {
+        		new_dialog.dismiss();
+        	}
+    	});
 	}
  }
