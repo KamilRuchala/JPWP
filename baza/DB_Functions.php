@@ -213,7 +213,7 @@ class DB_Functions {
 		$page = (int)$page;
 		$limit2 = $page * 20;
 		$limit1 = $limit2 - 20; 
-		$result = mysql_query("SELECT w.tytul, max(w.data) as data,tag, czyPrzeczytane, FROM wiadomosci w WHERE 
+		$result = mysql_query("SELECT w.tytul, max(w.data) as data, czyPrzeczytane, tag FROM wiadomosci w WHERE 
 		(w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id AND 
 		l.unique_id='$uid')) group by w.tytul ORDER BY data DESC LIMIT $limit1, $limit2");
 		$no_of_rows = mysql_num_rows($result);
@@ -362,7 +362,7 @@ class DB_Functions {
 	}
 	
 	public function GetMessagesByDoctorLogin($login){
-		$sth = mysql_query("SELECT tytul,tresc,data,tag,czyPrzeczytane FROM wiadomosci where lid = (SELECT lid from lekarze where login='$login')");
+		$sth = mysql_query("SELECT pid,tytul,tresc,data,tag,czyPrzeczytane FROM wiadomosci where lid = (SELECT lid from lekarze where login='$login')");
 		$update = mysql_query("UPDATE wiadomosci SET czyPrzeczytane = TRUE WHERE tag=0 AND lid = (SELECT lid from lekarze where login='$login')");
 		$rows = array();
 		while($r = mysql_fetch_assoc($sth)) {
@@ -375,6 +375,16 @@ class DB_Functions {
 		else
 			return $rows;
 	
+	}
+	
+	public function StoreMessageByDoctorLogin($login,$post){
+		$result = mysql_query("INSERT INTO wiadomosci (lid,pid,tytul,tresc,data,tag) VALUES ((SELECT lid from lekarze where login='$login'),'$post[pid]','$post[tytul]','$post[tresc]','$post[data]',1)");
+		if ($result){ 
+			return $true;
+		}
+		else{
+			return false;
+		}
 	}
 }
  

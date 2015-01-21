@@ -260,7 +260,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 			else{
 				$response["success"] = 0;
 				$response["error"] = 1;
-				$response["error_msg"] = "Blad! Dane niedostepne";
+				$response["error_msg"] = "Brak zaplanowanych wizyt";
 				echo json_encode($response);
 			}
 		}
