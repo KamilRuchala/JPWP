@@ -89,27 +89,30 @@ public class MessageActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.message, menu);
+		getMenuInflater().inflate(R.menu.activity_main_actions, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.action_refresh:
+	      refresh();
+	      break;
+	    default:
+	      break;
+	    }
+		return true;
 	}
 	
 	@Override
 	public void onBackPressed()
 	{
 		Intent i = new Intent(this,MessageBoxActivity.class);
-		startActivity(i);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);;
 	}
 	
 	private class nowyWatek extends AsyncTask<Void,Void,Void>{
@@ -347,5 +350,13 @@ public class MessageActivity extends ActionBarActivity {
 				});
 			}
 		}
+	}
+	
+	private void refresh(){
+		Intent i = new Intent(this,MessageActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+		i.putExtra("title", title);
+ 	   	startActivity(i);
 	}
 }

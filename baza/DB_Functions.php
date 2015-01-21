@@ -213,9 +213,11 @@ class DB_Functions {
 		$page = (int)$page;
 		$limit2 = $page * 20;
 		$limit1 = $limit2 - 20; 
-		$result = mysql_query("SELECT w.tytul, max(w.data) as data, czyPrzeczytane, tag FROM wiadomosci w WHERE 
-		(w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id AND 
-		l.unique_id='$uid')) group by w.tytul ORDER BY data DESC LIMIT $limit1, $limit2");
+		$result = mysql_query("select w.tytul, w.data, w.tag, w.czyPrzeczytane, w.data 
+		from wiadomosci w where (w.pid = (SELECT p.pid from pacjenci p, login l WHERE 
+		p.login = l.id AND l.unique_id='$uid')) and w.data = 
+		(select max(w1.data) from wiadomosci w1 where w1.tytul = w.tytul group by w1.tytul)  
+		ORDER BY w.data DESC LIMIT $limit1, $limit2");
 		$no_of_rows = mysql_num_rows($result);
         if ($no_of_rows >= 1) {
             while($row = mysql_fetch_array($result)) {
@@ -380,11 +382,21 @@ class DB_Functions {
 	public function StoreMessageByDoctorLogin($login,$post){
 		$result = mysql_query("INSERT INTO wiadomosci (lid,pid,tytul,tresc,data,tag) VALUES ((SELECT lid from lekarze where login='$login'),'$post[pid]','$post[tytul]','$post[tresc]','$post[data]',1)");
 		if ($result){ 
-			return $true;
+			return true;
 		}
 		else{
 			return false;
 		}
+	}
+	
+	public function StoreCalendarByDoctorLogin($login,$post){
+		$result = mysql_query("INSERT INTO historia_wizyt(pid,lid,data,uwagi) VALUES ('$post[pid]',(SELECT lid from lekarze where login='$login'),'$post[data]','$post[uwagi]')");
+		if ($result){ 
+			return true;
+		}
+		else{
+			return false;
+		}	
 	}
 }
  

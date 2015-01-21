@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +58,11 @@ public class MessageBoxActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_box);
+		
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME
+	        | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_CUSTOM);
+
 		new_message = (Button) findViewById(R.id.button2);
 		prev_button = (Button) findViewById(R.id.button1);
 		next_button = (Button) findViewById(R.id.button3);
@@ -122,20 +128,28 @@ public class MessageBoxActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.message_box, menu);
+		getMenuInflater().inflate(R.menu.activity_main_actions, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+	    // action with ID action_refresh was selected
+	    case R.id.action_refresh:
+	      refresh();
+	      break;
+	    default:
+	      break;
+	    }
+		return true;
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		Intent i = new Intent(this,MenuActivity.class);
+ 	   	startActivity(i);;
 	}
 	
 	private class nowyWatek extends AsyncTask<Void,Void,Void>{
@@ -262,6 +276,13 @@ public class MessageBoxActivity extends ActionBarActivity {
 		i.putExtra(KEY_UID, uid);
 		i.putExtra(KEY_SID, sid);
 		i.putExtra("title", tytul);
+ 	   	startActivity(i);
+	}
+	
+	private void refresh(){
+		Intent i = new Intent(this,MessageBoxActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
  	   	startActivity(i);
 	}
 	

@@ -58,5 +58,6 @@
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="title_activity_plan_visit">PlanVisitActivity</string>
     <string name="zaplanuj_wizyte">Wyslij zapytanie o wizytę w wybranym dniu</string>
+    <string name="ic_action_refresh">Refresh</string>
 
 </resources>
