@@ -105,6 +105,13 @@ public class MessageActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@Override
+	public void onBackPressed()
+	{
+		Intent i = new Intent(this,MessageBoxActivity.class);
+		startActivity(i);
+	}
+	
 	private class nowyWatek extends AsyncTask<Void,Void,Void>{
 
 		final Dialog dialog = new Dialog(context);

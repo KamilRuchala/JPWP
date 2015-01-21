@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rehabilitacja"
+    android:installLocation="preferExternal"
     android:versionCode="1"
-    android:versionName="1.0"
-    android:installLocation="preferExternal" >
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -44,20 +44,20 @@
             android:name=".WeekPlanActivity"
             android:label="@string/title_activity_week_plan"
             android:screenOrientation="portrait" >
- >
+ >
         </activity>
         <activity
             android:name=".MessageActivity"
             android:label="@string/title_activity_message"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" >
- >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+ >
         </activity>
         <activity
             android:name=".MessageBoxActivity"
             android:label="@string/title_activity_message_box"
             android:screenOrientation="portrait" >
- >
+ >
         </activity>
         <activity
             android:name=".SmsActivity"
@@ -68,6 +68,10 @@
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".PlanVisitActivity"
+            android:label="@string/title_activity_plan_visit" >
         </activity>
     </application>
 

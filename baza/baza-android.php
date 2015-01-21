@@ -282,6 +282,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 					$dane2 = $dane['wynik'][$tmp];
 					$response1["tytul"] = $dane2["tytul"];
 					$response1["data"] = $dane2["data"];
+					$response1["is_read"] = $dane2["czyPrzeczytane"];
+					$response1["tag"] = $dane2["tag"];
 					$jason=(string)json_encode($response1);
 					$stringjson = $stringjson . "--" . $jason;
 					$tmp = $tmp + 1;
@@ -377,36 +379,6 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 	else if ($tag == 'wyloguj'){
 		session_destroy();
 	}
-	
-	if ($tag == "loginD") { //login wporzo
-        // Request type is check Login
-		session_start();
-        $id = $_POST['id'];
-        $password = $_POST['pass'];
-		$ident = $_POST['ident'];
- 
-        // check for user
-        $user = $db->dLogin($id, $password, $ident);
-        if ($user != false) {
-            $response["success"] = 1;
-			$response["sid"] = session_id();
-			$response["imie"] = $user["imie"];
-			$response["nazwisko"] = $user["nazwisko"];
-			$response["nazwisko"] = $user["nazwisko"];
-			$response["email"] = $user["email"];
-            
-			if (!isset($_SESSION['zalogowany'])) //k
-			{ //k
-				$_SESSION['zalogowany'] = $user["unique_id"];//k
-				$_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];//k
-			} //k
-            echo json_encode($response);
-        } else {
-            $response["error"] = 1;
-            $response["error_msg"] = "Incorrect email or password!";
-            echo json_encode($response);
-        }
-    }
 	
 	////////
 	else {

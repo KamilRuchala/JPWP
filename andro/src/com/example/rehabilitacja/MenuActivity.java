@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 public class MenuActivity extends ActionBarActivity {
@@ -29,6 +30,7 @@ public class MenuActivity extends ActionBarActivity {
     private String uid;
     private String sid;
     final Context context = this;
+    private int backButtonCount = 0;
     
 
 	@Override
@@ -62,6 +64,9 @@ public class MenuActivity extends ActionBarActivity {
 	            }
             	else if(getResources().getString(R.string.menu21).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                showCalendar();
+	            }
+            	else if(getResources().getString(R.string.menu22).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                planVisit();
 	            }
             	else if(getResources().getString(R.string.menu31).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                messenger();
@@ -98,9 +103,21 @@ public class MenuActivity extends ActionBarActivity {
 	}
 	
 	@Override
-    public void onBackPressed(){ //konieczne poniewaz przy powrocie do menu przy kliknieciu back'a znowu pojawia sie menu i backiem nie mozna zminimalizowac
-    	moveTaskToBack(true); 
-        }
+	public void onBackPressed()
+	{
+	    if(backButtonCount >= 1)
+	    {
+	        Intent intent = new Intent(Intent.ACTION_MAIN);
+	        intent.addCategory(Intent.CATEGORY_HOME);
+	        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        startActivity(intent);
+	    }
+	    else
+	    {
+	        Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+	        backButtonCount++;
+	    }
+	}
 	
 	private void prepareListData() {
         listDataHeader = new ArrayList<String>();
@@ -199,6 +216,16 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	private void planVisit(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this,PlanVisitActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
+	}
+	
 	private void messenger(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -230,6 +257,7 @@ public class MenuActivity extends ActionBarActivity {
     	Editor editor = sharedpreferences.edit();
     	editor.clear();
     	editor.commit();
+    	android.os.Process.killProcess(android.os.Process.myPid());
     	moveTaskToBack(true); 
     	MenuActivity.this.finish();
     }

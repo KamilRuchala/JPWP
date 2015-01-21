@@ -14,8 +14,9 @@ public class Wiadomosc {
 	private String title;
 	private String tag;
 	private String tresc;
+	private boolean is_read;
 	
-	public Wiadomosc(String data1, String title) {
+	public Wiadomosc(String data1, String title, String tag, boolean is_read) {
 		super();
 		DateFormat df = new SimpleDateFormat("yyyy-M-dd HH:mm");
 		Date data = null;
@@ -40,12 +41,16 @@ public class Wiadomosc {
 			data1 = df1.format(newCalendar.getTime());
 		}
 		
+		
 		this.data = data1;
 		this.title = title;
-		this.tag = "";
+		this.tag = tag;
 		this.tresc = "";
+		this.is_read = is_read;
 	}
 	
+	
+
 	public Wiadomosc(String data1, String title, String tag, String tresc) {
 		super();
 		DateFormat df = new SimpleDateFormat("yyyy-M-dd HH:mm");
@@ -75,6 +80,7 @@ public class Wiadomosc {
 		this.title = title;
 		this.tag = tag;
 		this.tresc = tresc;
+		this.is_read = true;
 	}
 
 	public String getData() {
@@ -91,5 +97,9 @@ public class Wiadomosc {
 	
 	public String getTresc() {
 		return tresc;
+	}
+	
+	public boolean getIs_read() {
+		return is_read;
 	}
 }

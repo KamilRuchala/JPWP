@@ -213,7 +213,7 @@ class DB_Functions {
 		$page = (int)$page;
 		$limit2 = $page * 20;
 		$limit1 = $limit2 - 20; 
-		$result = mysql_query("SELECT w.tytul, max(w.data) as data FROM wiadomosci w WHERE 
+		$result = mysql_query("SELECT w.tytul, max(w.data) as data,tag, czyPrzeczytane, FROM wiadomosci w WHERE 
 		(w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id AND 
 		l.unique_id='$uid')) group by w.tytul ORDER BY data DESC LIMIT $limit1, $limit2");
 		$no_of_rows = mysql_num_rows($result);
@@ -240,6 +240,9 @@ class DB_Functions {
             while($row = mysql_fetch_array($result)) {
 				array_push($rows,$row);
 			}
+			$res = mysql_query("UPDATE wiadomosci w SET czyPrzeczytane = 1 WHERE w.tag = 1 AND
+		w.tytul = '$title' AND (w.pid = (SELECT p.pid from pacjenci p, login l WHERE p.login = l.id 
+		AND l.unique_id='$uid')) ORDER BY data");
 			return array('namba' => $no_of_rows, 'wynik' => $rows);
         } 
 		else {
@@ -284,7 +287,15 @@ class DB_Functions {
         }
 	}
 	
-	 public function dLogin($id, $password, $ident) {
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////SAJMONA/////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	public function dLogin($id, $password, $ident) {
         $result = mysql_query("SELECT * FROM login WHERE id = '$id' AND ident = '$ident'") or die(mysql_error());
         // check for result 
         $no_of_rows = mysql_num_rows($result);
@@ -296,7 +307,7 @@ class DB_Functions {
             // check for password equality
             if ($encrypted_password == $hash) {
                 // user authentication details are correct
-				$result = mysql_query("SELECT imie,nazwisko,email FROM lekarze WHERE login = '$id'") or die(mysql_error());
+				$result = mysql_query("SELECT imie,nazwisko,email,login FROM lekarze WHERE login = '$id'") or die(mysql_error());
 				$no_of_rows = mysql_num_rows($result);
 				if ($no_of_rows > 0) {
 					$result = mysql_fetch_array($result);
@@ -311,6 +322,60 @@ class DB_Functions {
             return false;
         }
     }
+	
+	public function GetPatiensByDoctorLogin($login) {
+		$sth = mysql_query("SELECT pid,imie,nazwisko,telefon,email,uid,numer_ubez as ubezpieczenie,pesel, ulicainumer as ulica,
+		kodpocztowy, miasto FROM pacjenci where lid = (SELECT lid from lekarze where login='$login') ");
+		$rows = array();
+		while($r = mysql_fetch_assoc($sth)) {
+			$rows[] = $r;
+		}
+		return $rows;
+	}
+	
+	public function AddPatientByDoctorLogin($login,$post){
+		$lid=mysql_query("SELECT lid from lekarze where login='$login'");
+		if (!$lid) {
+			return false;
+		}
+		$lid=mysql_fetch_row($lid);
+		$result = mysql_query("INSERT INTO pacjenci(lid, imie, nazwisko, telefon, email, ulicainumer, kodpocztowy, miasto, numer_ubez,pesel) VALUES('$lid[0]', '$post[imie]', '$post[nazwisko]','$post[telefon]','$post[email]','$post[ulica]','$post[kodpocztowy]','$post[miasto]','$post[ubezpieczenie]','$post[pesel]')");
+		if ($result){ 
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public function GetCalendarByDoctorLogin($login) {
+		$sth = mysql_query("SELECT pid,data,uwagi FROM historia_wizyt where lid = (SELECT lid from lekarze where login = '$login')");
+		$rows = array();
+		while($r = mysql_fetch_assoc($sth)) {
+			$rows[] = $r;
+		}
+		if( empty( $rows) )
+		{
+			return false;
+		}
+		else
+			return $rows;
+	}
+	
+	public function GetMessagesByDoctorLogin($login){
+		$sth = mysql_query("SELECT tytul,tresc,data,tag,czyPrzeczytane FROM wiadomosci where lid = (SELECT lid from lekarze where login='$login')");
+		$update = mysql_query("UPDATE wiadomosci SET czyPrzeczytane = TRUE WHERE tag=0 AND lid = (SELECT lid from lekarze where login='$login')");
+		$rows = array();
+		while($r = mysql_fetch_assoc($sth)) {
+			$rows[] = $r;
+		}
+		if( empty( $rows) )
+		{
+			return false;
+		}
+		else
+			return $rows;
+	
+	}
 }
  
 ?>

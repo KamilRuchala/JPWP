@@ -39,7 +39,7 @@ import com.example.rehabilitacja.klasy.GridviewAdapter;
 import com.example.rehabilitacja.klasy.UserFunctions;
 import com.example.rehabilitacja.klasy.Wizyta;
 
-public class CalendarActivity extends ActionBarActivity implements OnClickListener {
+public class PlanVisitActivity extends ActionBarActivity implements OnClickListener {
 	private static final String tag = "MyCalendarActivity";
 	
 	private GridviewAdapter mAdapter;
@@ -57,7 +57,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 	@SuppressLint({ "NewApi", "NewApi", "NewApi", "NewApi" })
 	private final DateFormat dateFormatter = new DateFormat();
 	private static final String dateTemplate = "MMMM yyyy";
-	private String wizyta = null;
+	
 	private Context context = this;
 	private String error_msg = null;
 	private boolean error = false;
@@ -68,17 +68,19 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 	private List<Wizyta> visitsList = new ArrayList<Wizyta>();
 	private List<Wizyta> visitDaysInMonth;
 	private Dialog new_dialog;
+	private Button zaplanuj;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_calendar);
-		
+		setContentView(R.layout.activity_plan_visit);
+		zaplanuj = (Button) findViewById(R.id.zaplanuj_wizytke);
+		zaplanuj.setVisibility(View.INVISIBLE);
 		Bundle bb = getIntent().getExtras();
 		uid = bb.getString(KEY_UID);
 		sid = bb.getString(KEY_SID);
-	
+		
 		new nowyWatek().execute();
 		
 	}
@@ -408,6 +410,9 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
             		}
             	}
             }
+			selectedDayMonthYearButton.setText("Wybrano Date: " + data);
+			zaplanuj.setVisibility(View.VISIBLE);
+			Log.e("Selected date", date_month_year);
 		}
 
 		public int getCurrentDayOfMonth() {
@@ -477,9 +482,8 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 				String tmp = message_titles[i];
 				try {
 					jObj = new JSONObject(tmp);
-					
+					Log.e("tutt","tu je ok");
 					visitsList.add(new Wizyta(jObj.getString("data"), jObj.getString("uwagi")));
-					wizyta = jObj.getString("data");
 		        } catch (JSONException e) {
 		            Log.e("JSONParserTreningAct", "Error parsing data " + e.toString());
 		            break;
@@ -531,6 +535,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
 
 		selectedDayMonthYearButton = (Button) this
 				.findViewById(R.id.selectedDayMonthYear);
+		selectedDayMonthYearButton.setText("Wybrano Date: ");
 
 		prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
 		prevMonth.setOnClickListener(this);
@@ -552,7 +557,7 @@ public class CalendarActivity extends ActionBarActivity implements OnClickListen
         gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(mAdapter);
  
-        selectedDayMonthYearButton.setText("Najbli¿sza wizyta: " + wizyta);
+
 		// Initialised
 		adapter = new GridCellAdapter(getApplicationContext(),
 				R.id.calendar_day_gridcell, month, year);

@@ -56,5 +56,7 @@
     <string name="sendSMS">Wyslij</string>
     <string name="number_of_mess">Liczba wiadomosci: </string>
     <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="title_activity_plan_visit">PlanVisitActivity</string>
+    <string name="zaplanuj_wizyte">Wyslij zapytanie o wizytę w wybranym dniu</string>
 
 </resources>

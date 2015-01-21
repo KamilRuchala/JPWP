@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -177,7 +178,9 @@ public class MessageBoxActivity extends ActionBarActivity {
 				String tmp = message_titles[i];
 				try {
 					jObj = new JSONObject(tmp);
-					messages_list.add(new Wiadomosc(jObj.getString("data"),jObj.getString("tytul")));
+					boolean readed = false;
+					if("1".equals(jObj.getString("is_read"))) readed = true;
+					messages_list.add(new Wiadomosc(jObj.getString("data"),jObj.getString("tytul"), jObj.getString("tag"), readed));
 		        } catch (JSONException e) {
 		            Log.e("JSONParserTreningAct", "Error parsing data " + e.toString());
 		            break;
@@ -235,6 +238,10 @@ public class MessageBoxActivity extends ActionBarActivity {
 			title.setText(aaa.getTitle());
 			data.setText(aaa.getData());
 			title.setOnClickListener(clicks);
+			if(!aaa.getIs_read() && "1".equals(aaa.getTag())){
+				title.setTypeface(null, Typeface.BOLD);
+				data.setTypeface(null, Typeface.BOLD);
+			}	
 		} 
 		tablicaLayout[20].setVisibility(LinearLayout.VISIBLE);
 		
