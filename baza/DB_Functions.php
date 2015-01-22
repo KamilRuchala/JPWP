@@ -289,6 +289,25 @@ class DB_Functions {
         }
 	}
 	
+	public function getHistory($uid){
+		$today = date_create(date('Y-m-d'));
+		$today2 = date_format($today, 'Y-m-d');
+		$rows = array();
+		$result = mysql_query("SELECT h.data, h.uwagi FROM historia_wizyt h WHERE 
+		h.data < '$today2'  AND (h.pid = (SELECT p.pid FROM pacjenci p, login l 
+		WHERE p.login = l.id AND l.unique_id='$uid')) order by h.data DESC");
+		$no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows >= 1) {
+            while($row = mysql_fetch_array($result)) {
+				array_push($rows,$row);
+			}
+			return array('namba' => $no_of_rows, 'wynik' => $rows);
+        } 
+		else {
+            return false;
+        }
+	}
+	
 	
 	
 	

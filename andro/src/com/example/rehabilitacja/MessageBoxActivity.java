@@ -149,7 +149,8 @@ public class MessageBoxActivity extends ActionBarActivity {
 	public void onBackPressed()
 	{
 		Intent i = new Intent(this,MenuActivity.class);
- 	   	startActivity(i);;
+ 	   	startActivity(i);
+ 	   	finish();
 	}
 	
 	private class nowyWatek extends AsyncTask<Void,Void,Void>{

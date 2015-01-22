@@ -45,6 +45,7 @@ public class UserFunctions {
     private static String messages = "messages_by_title";
     private static String store_message = "store_message";
     private static String doctor_number = "doctor_number";
+    private static String history = "history";
     //private static String dane_ogolne = "dane_ogolne";
      
     // constructor
@@ -56,9 +57,9 @@ public class UserFunctions {
     	// Making HTTP request
         try {
         	HttpParams httpParameters = new BasicHttpParams();
-        	int timeoutConnection = 10000;
+        	int timeoutConnection = 15000;
         	HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
-        	int timeoutSocket = 10000;
+        	int timeoutSocket = 15000;
         	HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         	
             // defaultHttpClient
@@ -235,5 +236,14 @@ public class UserFunctions {
 	  	    params.add(new BasicNameValuePair("sid", sid));
 	  	    return getServerResponse(params);
 	}
+   
+   public static String getHistory(String uid, String sid){
+   	 // Building Parameters
+   	    List<NameValuePair> params = new ArrayList<NameValuePair>();
+   	    params.add(new BasicNameValuePair("tag", history));
+   	    params.add(new BasicNameValuePair("uid", uid));
+   	    params.add(new BasicNameValuePair("sid", sid));
+   	    return getServerResponse(params);
+   }
     
 }

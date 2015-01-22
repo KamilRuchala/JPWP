@@ -376,6 +376,36 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
 		}
 	}
 	
+	else if ($tag == 'history'){
+		$uid=$_POST['uid'];
+		$sid=$_POST['sid'];
+		session_id($_POST['sid']);
+		session_start();
+		if($_SESSION['ip'] == $_SERVER['REMOTE_ADDR'] && $_SESSION['zalogowany'] == $uid){
+			$dane = $db->getHistory($uid);
+			if ($dane != false && $dane['namba'] >= 1) {
+				$tmp=0;
+				$response["success"] = 1;
+				$stringjson=(string)json_encode($response);
+				while($tmp < $dane['namba']){
+					$dane2 = $dane['wynik'][$tmp];
+					$response1["data"] = $dane2["data"];
+					$response1["uwagi"] = $dane2["uwagi"];
+					$jason=(string)json_encode($response1);
+					$stringjson = $stringjson . "--" . $jason;
+					$tmp = $tmp + 1;
+				}
+				echo $stringjson;
+			}
+			else{
+				$response["success"] = 0;
+				$response["error"] = 1;
+				$response["error_msg"] = "Brak zaplanowanych wizyt";
+				echo json_encode($response);
+			}
+		}
+	}
+	
 	else if ($tag == 'wyloguj'){
 		session_destroy();
 	}

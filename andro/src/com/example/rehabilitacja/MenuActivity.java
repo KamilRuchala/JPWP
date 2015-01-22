@@ -13,6 +13,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -36,6 +38,11 @@ public class MenuActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		 //Remove title bar
+	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+	    //Remove notification bar
+	    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_menu);
 		
 		 // get the listview
@@ -73,6 +80,9 @@ public class MenuActivity extends ActionBarActivity {
 	            }
             	else if(getResources().getString(R.string.menu33).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
 	                sms();
+	            }
+            	else if(getResources().getString(R.string.menu41).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
+	                history();
 	            }
             	else if(getResources().getString(R.string.menu61).equals(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition))){
             		logoutUser(v);
@@ -262,6 +272,14 @@ public class MenuActivity extends ActionBarActivity {
     	MenuActivity.this.finish();
     }
     
-    
+    private void history(){
+		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		uid=sharedpreferences.getString(KEY_UID, "brak");
+		sid=sharedpreferences.getString(KEY_SID, "brak");
+		Intent i = new Intent(this, HistoryActivity.class);
+		i.putExtra(KEY_UID, uid);
+		i.putExtra(KEY_SID, sid);
+ 	   	startActivity(i);
+	}
 }
 
