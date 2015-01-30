@@ -360,7 +360,7 @@ class DB_Functions {
 			return false;
 		}
 		$lid=mysql_fetch_row($lid);
-		$result = mysql_query("INSERT INTO pacjenci(lid, imie, nazwisko, telefon, email, ulicainumer, kodpocztowy, miasto, numer_ubez,pesel) VALUES('$lid[0]', '$post[imie]', '$post[nazwisko]','$post[telefon]','$post[email]','$post[ulica]','$post[kodpocztowy]','$post[miasto]','$post[ubezpieczenie]','$post[pesel]')");
+		$result = mysql_query("INSERT INTO pacjenci(lid, imie, nazwisko, telefon, email, ulicainumer, kodpocztowy, miasto, numer_ubez,pesel,login) VALUES('$lid[0]', '$post[imie]', '$post[nazwisko]','$post[telefon]','$post[email]','$post[ulica]','$post[kodpocztowy]','$post[miasto]','$post[ubezpieczenie]','$post[pesel]','$post[login]')");
 		if ($result){ 
 			return true;
 		}else{
