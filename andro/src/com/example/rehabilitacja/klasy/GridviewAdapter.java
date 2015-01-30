@@ -1,3 +1,5 @@
+
+
 package com.example.rehabilitacja.klasy;
 
 import java.util.ArrayList;
@@ -10,7 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.rehabilitacja.R;
- 
+/**
+ * Klasa opisujaca adapter GridView zastosowany w kalendarzu
+ * @author Kamil
+ */
 public class GridviewAdapter extends BaseAdapter
 {
     private ArrayList<String> listDays;

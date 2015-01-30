@@ -1,5 +1,9 @@
+/**
+ * Klasa zawierajaca statyczne metody obslugi serwera
+ * @author Kamil
+ */
+
 package com.example.rehabilitacja;
-//http://pastebin.com/yNqtKAKR
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

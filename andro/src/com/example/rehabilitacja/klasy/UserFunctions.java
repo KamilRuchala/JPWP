@@ -1,3 +1,8 @@
+/**
+ * Klasa zawierajaca statyczne metody obslugi serwera
+ * @author Kamil
+ */
+
 package com.example.rehabilitacja.klasy;
 
 import java.io.BufferedReader;
@@ -22,7 +27,6 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.util.Log;
  
 public class UserFunctions {
@@ -30,10 +34,13 @@ public class UserFunctions {
      
     // Testing in localhost using wamp or xampp 
     // use http://10.0.2.2/ to connect to your localhost ie http://localhost/
+	/** adres bazy*/
     private static String URL = "http://kruchala.zz.mu/baza-android.php";
     
     static InputStream is = null;
+    /** json pobrany z serwera*/
     static JSONObject jObj = null;
+    /** JSONObject w postaci string*/
     static String json = "";
     
     private static String login_tag = "login";
@@ -52,6 +59,11 @@ public class UserFunctions {
     public UserFunctions(){
     }
     
+    /**
+     * Pobranie odpowiedzi z serwera
+     * @param params lista parametrow do naglowka http
+     * @return odpowiedz serwera w postaci String
+     * */
     @SuppressWarnings("finally")
 	public static String getServerResponse(List<NameValuePair> params){
     	// Making HTTP request
@@ -101,6 +113,9 @@ public class UserFunctions {
      
     /**
      * function make Login Request
+     * @param id id uzytkownika
+     * @param pass haslo uzytkownika
+     * @return odpowiedz serwera
      * */
     @SuppressWarnings("finally")
 	public static JSONObject loginUser(String id, String pass){
@@ -138,26 +153,13 @@ public class UserFunctions {
     }
 
      
-    /**
-     * Function get Login status
-     * */
-    public boolean isUserLoggedIn(Context context){
-       
-        
-        return false;
-    }
-     
-   
-    
-    /**
-     * my functions
-     * */
-    
     
     
     /**
-     * Function to logout user's today plan
-     * Reset Database
+     * Funkcja generujaca zapytania na serwer konieczne do pobrania dzisiejszego planu cwiczen
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @return String
      * */
     public static String getTodayPlan(String uid, String sid){
 	 // Building Parameters
@@ -168,6 +170,12 @@ public class UserFunctions {
 	    return getServerResponse(params);
     }
     
+    /**
+     * Funkcja generujaca zapytania na serwer konieczne do pobrania jutrzejszego planu cwiczen
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @return String
+     * */
     public static String getTommorowPlan(String uid, String sid){
    	 // Building Parameters
    	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -177,6 +185,12 @@ public class UserFunctions {
    	    return getServerResponse(params);
     }
     
+    /**
+     * Funkcja generujaca parametry konieczne do pobrania tygodniowego planu cwiczen
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @return String
+     * */
     public static String getWeekPlan(String uid, String sid){
       	 // Building Parameters
       	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -186,6 +200,12 @@ public class UserFunctions {
       	    return getServerResponse(params);
     }
     
+    /**
+     * Funkcja generujaca parametry konieczne do pobrania planu wizyt
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @return String
+     * */
     public static String getVisitPlan(String uid, String sid){
      	 // Building Parameters
      	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -195,6 +215,13 @@ public class UserFunctions {
      	    return getServerResponse(params);
    }
     
+    /**
+     * Funkcja generujaca parametry konieczne do pobrania skrzynki wiadomosci
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @param page_nr numer przegladanej strony wiadomosc
+     * @return String
+     * */
     public static String getMessageBox(String uid, String sid, String page_nr){
      	 // Building Parameters
      	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -205,6 +232,13 @@ public class UserFunctions {
      	    return getServerResponse(params);
    }
     
+    /**
+     * Funkcja generujaca parametry konieczne do pobrania wiadomosci dla danego tytulu
+     * @param uid Unikalne id uzytkownika
+     * @param sid ID sesji nawiazanej na serwerze
+     * @param title Tytul wiadomosci
+     * @return String
+     * */
    public static String getMessageByTitle(String uid, String sid, String title){
     	 // Building Parameters
     	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -215,6 +249,15 @@ public class UserFunctions {
     	    return getServerResponse(params);
   }
    
+   /**
+    * Funkcja generujaca parametry konieczne do zachowania wiadomosci na serwerze
+    * @param uid Unikalne id uzytkownika
+    * @param sid ID sesji nawiazanej na serwerze
+    * @param title Tytul wiadomosci
+    * @param tresc Tresc wysylanej wiadomosci
+    * @param data Data nadanej wiadomosci
+    * @return String
+    * */
    public static String storeMessage(String uid, String sid, String title, String tresc, String data){
   	 // Building Parameters
   	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -228,6 +271,12 @@ public class UserFunctions {
   	    return getServerResponse(params);
    }
    
+   /**
+    * Funkcja generujaca parametry konieczne do pobrania numeru telefonu lekarza prowadzacego
+    * @param uid Unikalne id uzytkownika
+    * @param sid ID sesji nawiazanej na serwerze
+    * @return String
+    * */
    public static String getPhoneNumber(String uid, String sid){
 	  	 // Building Parameters
 	  	    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -237,6 +286,12 @@ public class UserFunctions {
 	  	    return getServerResponse(params);
 	}
    
+   /**
+    * Funkcja generujaca parametry konieczne do pobrania historii leczenia
+    * @param uid Unikalne id uzytkownika
+    * @param sid ID sesji nawiazanej na serwerze
+    * @return String
+    * */
    public static String getHistory(String uid, String sid){
    	 // Building Parameters
    	    List<NameValuePair> params = new ArrayList<NameValuePair>();

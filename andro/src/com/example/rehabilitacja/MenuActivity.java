@@ -1,3 +1,8 @@
+/**
+ * Klasa reprezentujaca aktywnosc Menu glownego
+ * @author Kamil
+ */
+
 package com.example.rehabilitacja;
 
 import java.util.ArrayList;
@@ -21,17 +26,25 @@ import android.widget.ExpandableListView.OnChildClickListener;
 
 public class MenuActivity extends ActionBarActivity {
 	
+	/** Adapter listy */
 	MyExpandableAdapter listAdapter;
     ExpandableListView expListView;
+    /** Nazwy listy menu */
     List<String> listDataHeader;
+    /** Ikony listy menu */
     List<Integer> listHeaderIcons;
+    /** Nazwy podmenu */
     HashMap<String, List<String>> listDataChild;
     
     private static String KEY_UID = "uid";
     private static String KEY_SID = "sid";
+    /** Unikalne ID uzytkownika */
     private String uid;
+    /** ID sesji */
     private String sid;
+    /** Aktualny context aplikacji */
     final Context context = this;
+    /** Licznik klikniec przycisku back */
     private int backButtonCount = 0;
     
 
@@ -112,6 +125,9 @@ public class MenuActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+     * Funkcja obslugujaca kliknieta przyciscku back. Jesli klikniety 2 razy aplikacja zamykana
+     * */
 	@Override
 	public void onBackPressed()
 	{
@@ -129,6 +145,9 @@ public class MenuActivity extends ActionBarActivity {
 	    }
 	}
 	
+	/**
+     * Przygotowanie naglowkow do menu
+     * */
 	private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
@@ -195,6 +214,9 @@ public class MenuActivity extends ActionBarActivity {
         listHeaderIcons.add(R.drawable.info);
     }
 	
+	/**
+     * Funkcja otwierajaca aktywnosc dzisiejszego planu treningowego
+     * */
 	private void todayPlan(String operation_tag){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -206,6 +228,9 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	/**
+     * Funkcja otwierajaca aktywnosc tygodniowego planu treningowego
+     * */
 	private void weekPlan(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -216,6 +241,9 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	/**
+     * Funkcja otwierajaca aktywnosc kalendarza leczenia
+     * */
 	private void showCalendar(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -226,6 +254,9 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	/**
+     * Funkcja otwierajaca aktywnosc planowania wizyty
+     * */
 	private void planVisit(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -236,6 +267,9 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	/**
+     * Funkcja otwierajaca aktywnosc skrzynki wiadomosci
+     * */
 	private void messenger(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -246,6 +280,9 @@ public class MenuActivity extends ActionBarActivity {
  	   	startActivity(i);
 	}
 	
+	/**
+     * Funkcja otwierajaca aktywnosc wyslania sms'a
+     * */
 	private void sms(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
@@ -259,8 +296,7 @@ public class MenuActivity extends ActionBarActivity {
 	
 	
 	 /**
-     * Function to logout user
-     * Reset Database
+     * Funkcja sluzaca do wylogowania uzytkownika
      * */
     public void logoutUser(View view){
     	SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -272,6 +308,9 @@ public class MenuActivity extends ActionBarActivity {
     	MenuActivity.this.finish();
     }
     
+    /**
+     * Funkcja otwierajaca aktywnosc historii leczenia
+     * */
     private void history(){
 		SharedPreferences sharedpreferences = getSharedPreferences(LogActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 		uid=sharedpreferences.getString(KEY_UID, "brak");
